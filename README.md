@@ -1,3 +1,4 @@
 # flaskapp
-project 2
+Crypto Portfolio Tracker
+
 An online flask

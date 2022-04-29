@@ -1,10 +1,12 @@
-DROP TABLE IF EXISTS customers,portfolios,portfolio_detail,transaction_history,users_authentication,transaction_types;
+-- psql ccryptodb < schema.sql
+DROP TABLE IF EXISTS users,portfolios,portfolio_detail,transaction_history,users_authentication,transaction_types;
 
-CREATE TABLE customers (
+CREATE TABLE users (
     id SERIAL PRIMARY KEY,
+    nickname TEXT,
     fname TEXT,
     lname TEXT,
-    date_joined DATE
+    hashed_password TEXT
 );
 CREATE TABLE transaction_types(
     type_id INTEGER PRIMARY KEY,
@@ -12,7 +14,7 @@ CREATE TABLE transaction_types(
 );
 CREATE TABLE portfolios (
     id SERIAL PRIMARY KEY,
-    customer_owner INTEGER REFERENCES customers(id),
+    customer_owner INTEGER REFERENCES users(id),
     starting_cash INTEGER
 );
 CREATE TABLE portfolio_detail(

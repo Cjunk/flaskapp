@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+<title>Crypto {% block title %} Login {% endblock %}</title>
+{% block content %}
+<form name="login_form" action="/login" method="POST"> 
+    <label for="uname">User name:</label><br>
+    <input type="text" id="uname" name="uname"><br> 
+
+    <label for="pass">Password</label><br>
+    <input type="password" id="pass" name="pword" required minlength="8"><br> 
+
+    <input type="submit" value="login">
+  </form>
+{% endblock %}

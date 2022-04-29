@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} Document {% endblock %}</title>
+    <link rel="stylesheet" href="static/style.css">
+    <title>Crypto {% block title %} Home {% endblock %}</title>
+    <script>
+        function DoPost() {
+            console.log("am in the function")
+            window.location.href = "/?status=" + "logout";
+            // $.post("/register.html", { name: "John", time: "2pm" });  //Your values here..
+        }
+    </script>
 </head>
+
 <body>
-    <h1>The heading</h1>
+    <header class="header">
+        <nav class="navigation-bar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                {% if SESSION_STATUS != 'logged in' %}
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+                {% else %}
+                <li><a href="javascript:DoPost()">Logout</a></li>
+                <form id="ninja" action="http://example.com/" method="POST">
+                    <input id="donaldduck" type="hidden" name="status" value="logout">
+                </form>
+            </ul>
+            {% endif %}
+            </ul>
+        </nav>
+
+    </header>
+    <h1>CRYPTO PORTFOLIOS</h1>
     {%block content %}
     {% endblock content %}
 </body>
+
 </html>
