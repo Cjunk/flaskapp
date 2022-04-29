@@ -34,4 +34,25 @@ def registernewuser(nickname,firstname,lastname,password):
         return 0
 def loginuser(username,hashedpassword):
     #   Will check the database for valid hash and return the user ID otherwise will return 0 for not found
-    pass
+        conn=psycopg2.connect(DATABASE_URL)
+        cur = conn.cursor()
+        retval = 0
+        username = str(username).upper()
+        postgres_insert_query = """SELECT hashed_password FROM users WHERE UPPER(nickname) Like '%s'""" %(username)
+        cur.execute(postgres_insert_query)
+        if cur.rowcount > 0:
+            print("FOUND")
+            usershashedPassword = cur.fetchone()[0] # retrieve the first result
+            print(usershashedPassword)
+            if usershashedPassword:
+                if usershashedPassword == hashedpassword:# successfull login
+                    #print("CORRECT PASSWORD ENTERED")
+                    retval = 1
+                else:
+                    #print("INCORRECT PASSWORD")
+                    pass
+            else:   # If the user doesnt exist
+                print("User doesnt exist")
+        cur.close()
+        conn.close()    
+        return retval

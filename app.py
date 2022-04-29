@@ -13,7 +13,6 @@ sha = hashlib.sha256()
 
 @app.route('/')
 def index():
-    print("Its a get method")
     user = request.cookies.get(COOKIELABEL[0]) # Look for previous cookie    
     opt_param = request.args.get("status")
     sess=STATUSS[1]
@@ -53,10 +52,11 @@ def login():
         username = request.values.get('uname')
         password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
         if(loginuser(username,password)):
-            return render_template(homepage,user=username,SESSION_STATUS=STATUSS[1])
+            resp = make_response(render_template(homepage,user=username,SESSION_STATUS=STATUSS[1])) 
+            addcookies(resp,COOKIELABEL,username)
+            return resp
         else: #user not in database
             return render_template(homepage,user='',SESSION_STATUS=STATUSS[0])
-            pass
     else: # method is GET
         return render_template("login.html")
 
