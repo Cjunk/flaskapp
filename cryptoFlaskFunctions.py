@@ -41,9 +41,7 @@ def loginuser(username,hashedpassword):
         postgres_insert_query = """SELECT hashed_password FROM users WHERE UPPER(nickname) Like '%s'""" %(username)
         cur.execute(postgres_insert_query)
         if cur.rowcount > 0:
-            print("FOUND")
             usershashedPassword = cur.fetchone()[0] # retrieve the first result
-            print(usershashedPassword)
             if usershashedPassword:
                 if usershashedPassword == hashedpassword:# successfull login
                     #print("CORRECT PASSWORD ENTERED")
