@@ -3,8 +3,16 @@
 {% block content %}
 {% if user != '' %}
 Home
-Welcome {{user}} you have {{}}
 
+Welcome {{user}}
+{% if portfolios %}
+<ul>
+    {% for each in portfolios %}
+    <li><a href="#">{{each[2]}}</a></li>
+    
+    {% endfor %}
+</ul>
+{% endif %}
 <div id="Portfolio_Menu">
     <h2>Your Portfolios</h2>
 

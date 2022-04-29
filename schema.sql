@@ -6,8 +6,7 @@ CREATE TABLE users (
     nickname TEXT,
     fname TEXT,
     lname TEXT,
-    hashed_password TEXT,
-    balance float
+    hashed_password TEXT
 );
 CREATE TABLE transaction_types(
     type_id INTEGER PRIMARY KEY,
@@ -17,7 +16,8 @@ CREATE TABLE portfolios (
     id SERIAL PRIMARY KEY,
     customer_owner INTEGER REFERENCES users(id),
     title TEXT,
-    starting_cash INTEGER
+    starting_cash INTEGER,
+    current_balance FLOAT
 );
 CREATE TABLE portfolio_detail(
     porfolio_id INTEGER NOT NULL,
@@ -44,3 +44,8 @@ CREATE TABLE users_authentication (
 
 INSERT INTO transaction_types(type_id,tran_type) VALUES(1,'BUY');
 INSERT INTO transaction_types(type_id,tran_type) VALUES(2,'SELL');
+
+
+INSERT INTO users(nickname,fname,lname,hashed_password) VALUES('Jericho','Jericho','Sharman','e191990b4d37a42f37453cb67edbb16d4c5782e2df3c78bcba21ececdb73056f');
+INSERT INTO portfolios(customer_owner,title,starting_cash,current_balance) VALUES(1,'savings',5000000,5000000);
+INSERT INTO portfolios(customer_owner,title,starting_cash,current_balance) VALUES(1,'new one',5000000,5000000);

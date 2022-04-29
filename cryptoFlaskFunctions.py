@@ -22,8 +22,8 @@ def registernewuser(nickname,firstname,lastname,password):
     try:
         conn=psycopg2.connect(DATABASE_URL)
         cur = conn.cursor()
-        postgres_insert_query = """INSERT INTO users (nickname, fname, lname, hashed_password,balance) VALUES (%s,%s,%s,%s,%s)"""
-        values_to_insert = [nickname,firstname,lastname,password,50000]  
+        postgres_insert_query = """INSERT INTO users (nickname, fname, lname, hashed_password) VALUES (%s,%s,%s,%s)"""
+        values_to_insert = [nickname,firstname,lastname,password]  
         cur.execute(postgres_insert_query,values_to_insert)
         conn.commit()
         cur.close()
@@ -37,6 +37,7 @@ def loginuser(username,hashedpassword):
         conn=psycopg2.connect(DATABASE_URL)
         cur = conn.cursor()
         retval = 0
+        print(hashedpassword)
         username = str(username).upper()
         postgres_insert_query = """SELECT hashed_password,id FROM users WHERE UPPER(nickname) Like '%s'""" %(username)
         cur.execute(postgres_insert_query)

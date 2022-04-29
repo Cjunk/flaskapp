@@ -1,6 +1,6 @@
 from flask import Flask,render_template,request,make_response
 from cryptoFlaskFunctions import *
-import os,hashlib,psycopg2,bcrypt
+import os,hashlib,psycopg2,bcrypt,json
 COOKIELABEL=['userID']
 homepage= 'home.html'
 DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
@@ -13,7 +13,8 @@ sha = hashlib.sha256()
 
 @app.route('/')
 def index():
-    user = request.cookies.get(COOKIELABEL[0]) # Look for previous cookie    
+    user = request.cookies.get(COOKIELABEL[0]) # Look for previous cookie  
+    print(user)  
     opt_param = request.args.get("status")
     sess=STATUSS[1]
     if opt_param is None:
@@ -53,9 +54,9 @@ def login():
         password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
         userid = loginuser(username,password)
         if(userid>0):
-            portfolios = getportfolio(userid)
+            portfolios = getportfolio(userid)   # Gets all the row data for each portfolio
             print("PORTFOLIOS",portfolios)
-            resp = make_response(render_template(homepage,user=username,SESSION_STATUS=STATUSS[1]),portfolios=portfolios) 
+            resp = make_response(render_template(homepage,user=username,SESSION_STATUS=STATUSS[1],portfolios=portfolios)) 
             addcookies(resp,COOKIELABEL,username)            
             return resp
         else: #user not in database
