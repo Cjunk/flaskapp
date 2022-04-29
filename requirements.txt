@@ -3,9 +3,6 @@ flask
 psycopg2
 bcrypt
 requests
-twilio
-bcrypt
-datetime
 os
 hashlib
 cryptoFlaskFunctions

@@ -51,14 +51,17 @@ def login():
     if request.method == 'POST':
         username = request.values.get('uname')
         password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
-        if(loginuser(username,password)):
-            resp = make_response(render_template(homepage,user=username,SESSION_STATUS=STATUSS[1])) 
-            addcookies(resp,COOKIELABEL,username)
+        userid = loginuser(username,password)
+        if(userid>0):
+            portfolios = getportfolio(userid)
+            print("PORTFOLIOS",portfolios)
+            resp = make_response(render_template(homepage,user=username,SESSION_STATUS=STATUSS[1]),portfolios=portfolios) 
+            addcookies(resp,COOKIELABEL,username)            
             return resp
         else: #user not in database
             return render_template(homepage,user='',SESSION_STATUS=STATUSS[0])
     else: # method is GET
         return render_template("login.html")
-
+    pass
 if __name__ == '__main__':
     app.run(debug=True)

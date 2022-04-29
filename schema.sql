@@ -6,7 +6,8 @@ CREATE TABLE users (
     nickname TEXT,
     fname TEXT,
     lname TEXT,
-    hashed_password TEXT
+    hashed_password TEXT,
+    balance float
 );
 CREATE TABLE transaction_types(
     type_id INTEGER PRIMARY KEY,
@@ -15,6 +16,7 @@ CREATE TABLE transaction_types(
 CREATE TABLE portfolios (
     id SERIAL PRIMARY KEY,
     customer_owner INTEGER REFERENCES users(id),
+    title TEXT,
     starting_cash INTEGER
 );
 CREATE TABLE portfolio_detail(
@@ -25,6 +27,7 @@ CREATE TABLE portfolio_detail(
 );
 
 CREATE TABLE transaction_history (
+    tranid SERIAL PRIMARY KEY,
     tran_date DATE,
     coin TEXT,
     portfolio_id INTEGER REFERENCES portfolios(id),
