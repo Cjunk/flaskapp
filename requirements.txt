@@ -5,4 +5,3 @@ bcrypt
 requests
 os
 hashlib
-cryptoFlaskFunctions
