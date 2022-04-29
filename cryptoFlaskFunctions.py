@@ -34,4 +34,4 @@ def registernewuser(nickname,firstname,lastname,password):
         return 0
 def loginuser(username,hashedpassword):
     #   Will check the database for valid hash and return the user ID otherwise will return 0 for not found
-
+    pass
