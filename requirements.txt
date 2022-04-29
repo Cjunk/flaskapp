@@ -6,3 +6,6 @@ requests
 twilio
 bcrypt
 datetime
+os
+hashlib
+cryptoFlaskFunctions
