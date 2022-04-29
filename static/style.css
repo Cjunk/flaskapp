@@ -1,4 +1,44 @@
 .navigation-bar {
 height:100px;
-
+}
+body {
+    background-color: aqua;
+    margin:0;
+}
+header {
+    margin:0;
+    padding:0;
+}
+.mainbody {
+    margin:0 auto;
+    width:5%;
+    
+    height:100%;
+    text-align: center;
+}
+.bannerImage {
+    margin:0;
+    padding:0;
+}
+.navigation-bar{
+    margin:0;
+    padding:0;
+}
+#navlink {
+    margin:0;
+    padding:0;
+}
+#navlink li{
+    display:inline;
+    width:50PX;
+}
+#navlink li a{
+    border:1px solid red;
+    width:150PX;
+}
+#loginformwrapper {
+    margin:0 auto;
+}
+.homecontent {
+    text-align: center;
 }

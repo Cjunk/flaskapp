@@ -18,25 +18,27 @@
 <body>
     <header class="header">
         <nav class="navigation-bar">
-            <ul>
+            <img src="static/12-01.png" class="bannerImage" alt="Girl in a jacket" width="2048px" height="60px">
+            <ul id="navlink">
                 <li><a href="/">Home</a></li>
                 {% if SESSION_STATUS != 'logged in' %}
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
                 {% else %}
                 <li><a href="javascript:DoPost()">Logout</a></li>
-                <form id="ninja" action="http://example.com/" method="POST">
-                    <input id="donaldduck" type="hidden" name="status" value="logout">
-                </form>
             </ul>
             {% endif %}
             </ul>
         </nav>
 
     </header>
-    <h1>CRYPTO PORTFOLIOS</h1>
-    {%block content %}
-    {% endblock content %}
+    <content>
+        <div class="mainbody">
+            {%block content %}
+            {% endblock content %}
+        </div>
+    </content>
+
 </body>
 
 </html>

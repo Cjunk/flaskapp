@@ -1,7 +1,5 @@
 gunicorn
 flask
 psycopg2
-bcrypt
 requests
-os
 hashlib

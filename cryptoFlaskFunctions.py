@@ -1,4 +1,4 @@
-import hashlib,psycopg2,os
+import hashlib,psycopg2,os,json
 DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
 SECRET_KEY = os.environ.get('SECRET_KEY','pretend secret key')
 def deletecookies(r,c):
@@ -26,6 +26,7 @@ def registernewuser(nickname,firstname,lastname,password):
         values_to_insert = [nickname,firstname,lastname,password]  
         cur.execute(postgres_insert_query,values_to_insert)
         conn.commit()
+
         cur.close()
         conn.close()  
         return 1
@@ -41,12 +42,17 @@ def loginuser(username,hashedpassword):
         username = str(username).upper()
         postgres_insert_query = """SELECT hashed_password,id FROM users WHERE UPPER(nickname) Like '%s'""" %(username)
         cur.execute(postgres_insert_query)
+        rows = cur.fetchone()
+        print("HASHED PASSWORD ##",rows[0])
         if cur.rowcount > 0:
-            usershashedPassword = cur.fetchone()[0] # retrieve the first result
+            print("------------------------------ cur.rowcount > 0 ---------------------------")
+            usershashedPassword = rows[0] # retrieve the first result
+            print("---------------Users hashed password",usershashedPassword)
             if usershashedPassword:
                 if usershashedPassword == hashedpassword:# successfull login
                     #print("CORRECT PASSWORD ENTERED")
-                    retval = 1
+                    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", username,rows,cur.rowcount,cur.fetchall())
+                    retval = rows[1] # get the user id
                 else:
                     #print("INCORRECT PASSWORD")
                     pass
@@ -68,3 +74,10 @@ def getportfolio(userid): # Gets the porftolio from the dataabase for the user
     cur.close()
     conn.close() 
     return results
+def getuserid_byusername(username):
+    conn=psycopg2.connect(DATABASE_URL)
+    cur = conn.cursor()
+    postgres_insert_query = """SELECT id FROM users WHERE customer_owner = %s""" %(username)    
+    cur.execute(postgres_insert_query) 
+    cur.close()
+    conn.close() 
