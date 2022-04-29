@@ -1,7 +1,7 @@
 from flask import Flask,render_template,request,make_response
 from cryptoFlaskFunctions import *
-import os,hashlib,psycopg2,bcrypt,json
-COOKIELABEL=['userID']
+import os,psycopg2,bcrypt,json
+COOKIELABEL=['userID','customerNumber']
 homepage= 'home.html'
 DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
 SECRET_KEY = os.environ.get('SECRET_KEY','pretend secret key')
@@ -14,13 +14,18 @@ sha = hashlib.sha256()
 @app.route('/')
 def index():
     user = request.cookies.get(COOKIELABEL[0]) # Look for previous cookie  
-    print(user)  
+    currentuserID = int(request.cookies.get(COOKIELABEL[1])) # Look for previous cookie 
     opt_param = request.args.get("status")
+    print(opt_param)
     sess=STATUSS[1]
     if opt_param is None:
-        if not user: # If there is no previous cookie then make it ''
+        if not user: # If there is no previous cookie then make user = ''
             user = ""
             sess=STATUSS[0]
+        else:
+            numberofportfolios = getportfolio(currentuserID)
+            resp = make_response(render_template(homepage,user=user,SESSION_STATUS=STATUSS[1],portfolios=numberofportfolios))
+            return resp
     else:
         resp = make_response(render_template(homepage,user = '',SESSION_STATUS=STATUSS[0]))         
         deletecookies(resp,COOKIELABEL)
@@ -37,7 +42,9 @@ def addnewuser():  # Registering a new user
     resp = make_response(render_template(homepage,user='',SESSION_STATUS=STATUSS[0]))
     if registernewuser(nickname,fname,lname,password):  # returns 1 if registing new user successfull
         resp = make_response(render_template(homepage,user=nickname,SESSION_STATUS=STATUSS[1])) 
-        addcookies(resp,COOKIELABEL,nickname) 
+        paramsList = []
+        paramsList.append(nickname)
+        addcookies(resp,COOKIELABEL,paramsList) 
     else: # returns 0 :  New user was not registered successfully.
         #TODO alert user when the user was not registered.
         pass  
@@ -54,10 +61,13 @@ def login():
         password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
         userid = loginuser(username,password)
         if(userid>0):
+            print("PORTFOLIOS",portfolios)           
             portfolios = getportfolio(userid)   # Gets all the row data for each portfolio
-            print("PORTFOLIOS",portfolios)
             resp = make_response(render_template(homepage,user=username,SESSION_STATUS=STATUSS[1],portfolios=portfolios)) 
-            addcookies(resp,COOKIELABEL,username)            
+            paramsList = []
+            paramsList.append(username)
+            paramsList.append(str(userid))
+            addcookies(resp,COOKIELABEL,paramsList)            
             return resp
         else: #user not in database
             return render_template(homepage,user='',SESSION_STATUS=STATUSS[0])
