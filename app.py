@@ -1,6 +1,8 @@
 from flask import Flask,render_template,request,make_response
+import requests
 from cryptoFlaskFunctions import *
 import os,psycopg2,bcrypt,json
+from coinspot import CoinSpot
 COOKIELABEL=['userID','customerNumber']
 homepage= 'home.html'
 DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
@@ -10,11 +12,16 @@ SESSION_STATUS = STATUSS[0]
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 sha = hashlib.sha256()
+cryptoApi = CoinSpot("df",SECRET_KEY)
+
+response = cryptoApi.latestPrice("xrp")
+
+print(">>>>>>>>>>>>>>>>>>>>> ",response)
 
 @app.route('/')
 def index():
     user = request.cookies.get(COOKIELABEL[0]) # Look for previous cookie  
-    currentuserID = int(request.cookies.get(COOKIELABEL[1])) # Look for previous cookie 
+    #currentuserID = int(request.cookies.get(COOKIELABEL[1])) # Look for previous cookie 
     opt_param = request.args.get("status")
     print(opt_param)
     sess=STATUSS[1]
@@ -23,8 +30,9 @@ def index():
             user = ""
             sess=STATUSS[0]
         else:
-            numberofportfolios = getportfolio(currentuserID)
-            resp = make_response(render_template(homepage,user=user,SESSION_STATUS=STATUSS[1],portfolios=numberofportfolios))
+            currentuserID = int(request.cookies.get(COOKIELABEL[1])) # Look for previous cookie
+            portfolios = getportfolio(currentuserID)
+            resp = make_response(render_template(homepage,user=user,SESSION_STATUS=sess,portfolios=portfolios))
             return resp
     else:
         resp = make_response(render_template(homepage,user = '',SESSION_STATUS=STATUSS[0]))         
@@ -40,10 +48,12 @@ def addnewuser():  # Registering a new user
     lname = request.form['lname']
     password =request.form['pword']
     resp = make_response(render_template(homepage,user='',SESSION_STATUS=STATUSS[0]))
-    if registernewuser(nickname,fname,lname,password):  # returns 1 if registing new user successfull
+    userid = registernewuser(nickname,fname,lname,password)  # returns 1 if registing new user successfull
+    if userid>0:
         resp = make_response(render_template(homepage,user=nickname,SESSION_STATUS=STATUSS[1])) 
         paramsList = []
         paramsList.append(nickname)
+        paramsList.append(userid)
         addcookies(resp,COOKIELABEL,paramsList) 
     else: # returns 0 :  New user was not registered successfully.
         #TODO alert user when the user was not registered.
@@ -61,8 +71,9 @@ def login():
         password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
         userid = loginuser(username,password)
         if(userid>0):
-            print("PORTFOLIOS",portfolios)           
+           
             portfolios = getportfolio(userid)   # Gets all the row data for each portfolio
+            print("PORTFOLIOS",portfolios)            
             resp = make_response(render_template(homepage,user=username,SESSION_STATUS=STATUSS[1],portfolios=portfolios)) 
             paramsList = []
             paramsList.append(username)

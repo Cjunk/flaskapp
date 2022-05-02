@@ -29,7 +29,6 @@ def registernewuser(nickname,firstname,lastname,password):
     nickname = nickname.upper()
     firstname = firstname.upper()
     lastname = lastname.upper()
-    
     password = hashlib.sha256(str(password).encode('utf-8')).hexdigest()
     try:
         conn=psycopg2.connect(DATABASE_URL)
@@ -41,7 +40,7 @@ def registernewuser(nickname,firstname,lastname,password):
         userid = getuserID(nickname,password)  
         cur.close()
         conn.close()  
-        return 1
+        return userid
     except (Exception, psycopg2.Error) as error:
         print("Failed to insert record into users table", error)
         return 0
@@ -51,23 +50,17 @@ def loginuser(username,hashedpassword):
         conn=psycopg2.connect(DATABASE_URL)
         cur = conn.cursor()
         retval = 0
-        print(hashedpassword)
         username = str(username).upper()
         postgres_insert_query = """SELECT hashed_password,id FROM users WHERE UPPER(nickname) Like '%s'""" %(username)
         cur.execute(postgres_insert_query)
         rows = cur.fetchone()
-        print("HASHED PASSWORD ##",rows[0])
         if cur.rowcount > 0:
-            print("------------------------------ cur.rowcount > 0 ---------------------------")
             usershashedPassword = rows[0] # retrieve the first result
-            print("---------------Users hashed password",usershashedPassword)
             if usershashedPassword:
                 if usershashedPassword == hashedpassword:# successfull login
-                    #print("CORRECT PASSWORD ENTERED")
                     print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", username,rows,cur.rowcount,cur.fetchall())
                     retval = rows[1] # get the user id
                 else:
-                    #print("INCORRECT PASSWORD")
                     pass
             else:   # If the user doesnt exist
                 print("User doesnt exist")
@@ -79,7 +72,6 @@ def getportfolio(userid): # Gets the porftolio from the dataabase for the user
     cur = conn.cursor()  
     postgres_insert_query = """SELECT * FROM portfolios WHERE customer_owner = %s""" %(userid)    
     cur.execute(postgres_insert_query)
-    print("search for portfolios")
     if cur.rowcount > 0:
         results = cur.fetchall()
     else:
@@ -90,7 +82,7 @@ def getportfolio(userid): # Gets the porftolio from the dataabase for the user
 def getuserid_byusername(username):
     conn=psycopg2.connect(DATABASE_URL)
     cur = conn.cursor()
-    postgres_insert_query = """SELECT id FROM users WHERE customer_owner = %s""" %(username)    
+    postgres_insert_query = """SELECT id FROM users WHERE nickname = %s""" %(username)    
     cur.execute(postgres_insert_query) 
     cur.close()
     conn.close() 
