@@ -2,17 +2,16 @@
 <title>{% block title %} Some text {% endblock %}</title>
 {% block content %}
 {% if user != '' %}
-<h1>Home</h1>
 {% if session['userid'] %}
-<h2>Welcome {{session['nick_name']}}</h2><a id="usernameText">{{user}}</a>
+<h2>Welcome <span>{{session['nick_name']}}</span></h2><a id="usernameText">{{user}}</a>
 {% if session['portfolios'] %}
 <div id="Portfolio_Menu">
-    <h2>Your Portfolios</h2>
+    <h2>See your portfolio below</h2>
     <ul id="nobullets">
         {% for each in session['portfolios'] %}
         <div class="portfolioMenuItemWrapper">
-            <li class="portfolioItems"><a href="/showportfolio?portid={{each[0]}}">{{each[2]}}</a><a id="portfolioButtonBox"></a><a
-                    id="box"></a>
+            <li class="portfolioItems"><a href="/showportfolio?portid={{each[0]}}">{{each[2]}}</a>
+                <!-- <a id="portfolioButtonBox"></a><a id="box"></a> -->
             </li>
         </div>
         {% endfor %}
@@ -21,12 +20,23 @@
 <!-- TODO -->
 <!-- Display the first portfolio: Demonstration purposes  -->
 {% if session['showportfolio'] > 0 %}
-<div class="portfolioDisplayWrapper">
-        {% for each in portfoliodetail %}    
-    <div id="eachRowInPortfolio">
-        <a>{{each[1]}}</a><a>{{each[2]}}</a><a>{{each[3]}}</a>
+<a id="portfolioTextHeading">Remaining Balance <span>${{session['portfolios'][session['showportfolio']-1][4]}}</span></a> 
+<div class="portfolioDisplayBody">
+        {% if portfoliodetail %}   
+
+    <div class="portfolioDisplayWrapper">
+
+        <div id="tableHeading">
+            <a>Coin</a><a>Price</a><a>Quantity</a><a>Current value</a><a>Current value</a>
+        </div>
+
+        {% for each in portfoliodetail %}
+        <div id="eachRowInPortfolio" href="#">
+            <a>{{each[1]}}</a><a>${{each[2]}}</a><a>{{each[3]}}</a><a>${{each[3]}}</a><a>{{each[3]}}</a>
+        </div>
+        {% endfor %}
+        {% endif %}
     </div>
-         {% endfor %}   
 </div>
 {% endif %}
 {% endif %}

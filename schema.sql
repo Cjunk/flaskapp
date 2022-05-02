@@ -53,3 +53,5 @@ INSERT INTO portfolios(customer_owner,title,starting_cash,current_balance) VALUE
 INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(1,'BTC',56000,.12);
 INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(1,'ETH',2900,.25);
 INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(1,'XRP',1000,.86);
+
+INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(2,'BTC',56000,.12);

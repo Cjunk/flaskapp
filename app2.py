@@ -85,8 +85,10 @@ def registerLand():
 
 @app.route("/showportfolio", methods=['GET'])
 def showportfolio():
-    return render_template("home.html")
-
+    portid = request.args.get('portid')
+    # print(portid,getportfolioDetail(int(portid),2))
+    resp = render_template("home.html",portfoliodetail=getportfolioDetail(int(portid),session['userid']))
+    return resp
 
 if __name__ == '__main__':
     app.run(debug=True)

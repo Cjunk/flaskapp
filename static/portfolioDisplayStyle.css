@@ -1,0 +1,56 @@
+.portfolioMenuItemWrapper {
+    display: inline;
+    height:5%;
+    width:15%;
+    text-align:left;
+}
+#portfolioButtonBox {
+    width: 25%;
+    height: 100%;
+    border: 1px solid red;
+}
+.portfolioMenuItemWrapper button {
+    padding:0;
+    margin:0;
+}
+#box {
+    border:1px solid red;
+    width:15%;
+}
+.portfolioDisplayWrapper {
+    width:100%;
+    margin: auto;
+    border: 5px solid purple;
+    border-radius: 15px;
+}
+.portfolioMenu {
+   text-align:center;
+
+}
+.portfolioItems{
+        text-align: center; 
+}
+#eachRowInPortfolio {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+#tableHeading {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    background-color:blueviolet;
+    color:white;
+}
+.portfolioDisplayBody {
+    width:80%;
+    margin:auto;
+    display:grid;
+    grid-template-columns: 70% 30%;
+}
+#eachRowInPortfolio:hover {
+    cursor:pointer;
+    background-color: red;
+    color:white;
+}
+.portfolioItems a {
+    font-size:26px;
+}

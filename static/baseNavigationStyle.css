@@ -1,0 +1,57 @@
+.navigation-bar {
+    height: 100px;
+}
+
+.mainbody {
+    margin: 0 auto;
+    width: 100%;
+    text-align: left;
+    height: 100%;
+    text-align: center;
+}
+
+header {
+    margin: 0;
+    padding: 0;
+}
+
+.bannerImage {
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+.navigation-bar {
+    margin: 0;
+    padding: 0;
+}
+
+#navlink {
+    margin: 0;
+    padding: 0;
+
+}
+
+#nobullets {
+    list-style-type: none;
+    /* Remove bullets */
+}
+
+#navlink li {
+    line-height: 50px;
+    font-size: 26px;
+    width: 10%;
+    background: rgb(31, 23, 104);
+    margin: 2px;
+    text-align: center;
+    border-radius: 25px;
+    z-index: 4;
+}
+
+#navlink li:hover {
+    background: yellow;
+    cursor:pointer;
+}
+
+#navlink li a {
+    width: 150PX;
+}

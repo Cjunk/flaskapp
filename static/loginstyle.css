@@ -1,0 +1,15 @@
+#loginformwrapper {
+    margin: 0 auto;
+    width: 10%;
+    align-self: center;
+    text-align: center;
+}
+
+#usernameText {
+    font-size: 32px;
+    text-align: left;
+}
+
+.loginBut {
+    margin:10px 0;
+}
