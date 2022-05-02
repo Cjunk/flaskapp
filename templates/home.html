@@ -3,16 +3,33 @@
 {% block content %}
 {% if user != '' %}
 <h1>Home</h1>
-<h2>Welcome</h2><a  id="usernameText">{{user}}</a>
-{% if portfolios %}
+{% if session['userid'] %}
+<h2>Welcome {{session['nick_name']}}</h2><a id="usernameText">{{user}}</a>
+{% if session['portfolios'] %}
 <div id="Portfolio_Menu">
     <h2>Your Portfolios</h2>
+    <ul id="nobullets">
+        {% for each in session['portfolios'] %}
+        <div class="portfolioMenuItemWrapper">
+            <li class="portfolioItems"><a href="/showportfolio?portid={{each[0]}}">{{each[2]}}</a><a id="portfolioButtonBox"></a><a
+                    id="box"></a>
+            </li>
+        </div>
+        {% endfor %}
+    </ul>
 </div>
-<ul id="nobullets">
-    {% for each in portfolios %}
-    <li><a href="#">{{each[2]}}</a></li>
-    {% endfor %}
-</ul>
+<!-- TODO -->
+<!-- Display the first portfolio: Demonstration purposes  -->
+{% if session['showportfolio'] > 0 %}
+<div class="portfolioDisplayWrapper">
+        {% for each in portfoliodetail %}    
+    <div id="eachRowInPortfolio">
+        <a>{{each[1]}}</a><a>{{each[2]}}</a><a>{{each[3]}}</a>
+    </div>
+         {% endfor %}   
+</div>
+{% endif %}
+{% endif %}
 {% endif %}
 {% endif %}
 {% endblock %}

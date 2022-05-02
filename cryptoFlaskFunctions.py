@@ -67,10 +67,24 @@ def loginuser(username,hashedpassword):
         cur.close()
         conn.close()    
         return retval
-def getportfolio(userid): # Gets the porftolio from the dataabase for the user
+def getportfolio(userid): # Gets the porftolios from the dataabase for the user
     conn=psycopg2.connect(DATABASE_URL)
     cur = conn.cursor()  
     postgres_insert_query = """SELECT * FROM portfolios WHERE customer_owner = %s""" %(userid)    
+    cur.execute(postgres_insert_query)
+    if cur.rowcount > 0:
+        results = cur.fetchall()
+    else:
+        results = None
+    cur.close()
+    conn.close() 
+    return results
+def getportfolioDetail(portid,userid):
+    #print("The portfolio I am looking for is ",portid,"And its type is ",type(portid))
+    # retrieves all the detail for a single portfolio
+    conn=psycopg2.connect(DATABASE_URL)
+    cur = conn.cursor()
+    postgres_insert_query = """SELECT * FROM portfolio_detail WHERE porfolio_id = %s""" %(portid)    
     cur.execute(postgres_insert_query)
     if cur.rowcount > 0:
         results = cur.fetchall()

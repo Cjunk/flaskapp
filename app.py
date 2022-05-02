@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,make_response
+from flask import Flask,render_template,request,make_response,session,redirect
 import requests
 from cryptoFlaskFunctions import *
 import os,psycopg2,bcrypt,json
@@ -13,10 +13,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 sha = hashlib.sha256()
 cryptoApi = CoinSpot("df",SECRET_KEY)
-
 response = cryptoApi.latestPrice("xrp")
-
 print(">>>>>>>>>>>>>>>>>>>>> ",response)
+
+@app.route("/logout")
+def logout():
+    session['useruser'] = None
+    return redirect("/")
 
 @app.route('/')
 def index():
@@ -50,6 +53,7 @@ def addnewuser():  # Registering a new user
     resp = make_response(render_template(homepage,user='',SESSION_STATUS=STATUSS[0]))
     userid = registernewuser(nickname,fname,lname,password)  # returns 1 if registing new user successfull
     if userid>0:
+        
         resp = make_response(render_template(homepage,user=nickname,SESSION_STATUS=STATUSS[1])) 
         paramsList = []
         paramsList.append(nickname)
@@ -63,6 +67,11 @@ def addnewuser():  # Registering a new user
 @app.route('/register')
 def register():
     return render_template("register.html")
+
+@app.route("/showportfolio", methods=['GET'])
+def showportfolio():
+
+    return render_template("home.html")
 
 @app.route('/login',methods = ['GET','POST'])
 def login():

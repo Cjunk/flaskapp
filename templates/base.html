@@ -21,11 +21,11 @@
             <img src="static/12-01.png" class="bannerImage" alt="Girl in a jacket" width="2048px" height="60px">
             <ul id="navlink">
                 <li><a href="/">Home</a></li>
-                {% if SESSION_STATUS != 'logged in' %}
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
+                {% if session['nick_name'] %}
+                <li><a href="/logout">Logout</a></li>
                 {% else %}
-                <li><a href="javascript:DoPost()">Logout</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>                
             </ul>
             {% endif %}
             </ul>
@@ -33,6 +33,7 @@
 
     </header>
     <content>
+     
         <div class="mainbody">
             {%block content %}
             {% endblock content %}

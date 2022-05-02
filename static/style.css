@@ -1,59 +1,116 @@
 .navigation-bar {
-height:100px;
+    height: 100px;
 }
+
 body {
     background-color: aqua;
-    margin:0;
+    margin: 0;
 }
+
 header {
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 }
+
 .mainbody {
-    margin:0 auto;
-    width:10%;
-    text-align: left;   
-    height:100%;
+    margin: 0 auto;
+    width: 100%;
+    text-align: left;
+    height: 100%;
     text-align: center;
 }
+
 .bannerImage {
-    margin:0;
-    padding:0;
-    width:100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
-.navigation-bar{
-    margin:0;
-    padding:0;
+
+.navigation-bar {
+    margin: 0;
+    padding: 0;
 }
+
 #navlink {
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 
 }
+
 #nobullets {
-    list-style-type: none; /* Remove bullets */    
+    list-style-type: none;
+    /* Remove bullets */
 }
-#navlink li{
+
+#navlink li {
     line-height: 50px;
-    font-size:26px;
-    width:100PX;
-    background:rgb(31, 23, 104);
-    margin:2px;
-    text-align:center;
+    font-size: 26px;
+    width: 100PX;
+    background: rgb(31, 23, 104);
+    margin: 2px;
+    text-align: center;
 }
-#navlink li:hover{
-    background:yellow;
+
+#navlink li:hover {
+    background: yellow;
 }
-#navlink li a{
-    width:150PX;
+
+#navlink li a {
+    width: 150PX;
 }
+
 #loginformwrapper {
-    margin:0 auto;
+    margin: 0 auto;
+    width: 10%;
+    align-self: center;
+    text-align: center;
 }
+
 .homecontent {
     text-align: center;
 }
+
 #usernameText {
     font-size: 32px;
+    text-align: left;
+}
+
+.portfolioMenuItemWrapper {
+    display: inline;
+    height:5%;
+    width:15%;
     text-align:left;
+}
+.loginBut {
+    margin:10px 0;
+}
+
+#portfolioButtonBox {
+    width: 25%;
+    height: 100%;
+    border: 1px solid red;
+}
+.portfolioMenuItemWrapper button {
+    padding:0;
+    margin:0;
+}
+#box {
+    border:1px solid red;
+    width:15%;
+}
+.portfolioDisplayWrapper {
+    width:25%;
+    margin: auto;
+    border: 1px solid purple;
+}
+.portfolioMenu {
+   text-align:center;
+
+}
+.portfolioItems{
+        text-align: center; 
+}
+#eachRowInPortfolio {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
