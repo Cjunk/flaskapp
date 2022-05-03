@@ -28,7 +28,6 @@ def getportfoliodetail(portid,userid):
 
 @app.route("/login",methods=['GET','POST'])
 def login():
-    
     if request.method == "GET":
         return render_template("login.html")
     else:
@@ -37,7 +36,7 @@ def login():
         username = request.values.get('uname')
         password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
         userid = loginuser(username,password) 
-        return render_template("login.html") 
+        
         if(userid>0): #  user and password correct so log them in One time action
             session['userid'] = userid
             session['nick_name'] = username
@@ -53,7 +52,6 @@ def login():
             #print(portfolioDetails)
         else: #user does not exist or incorrect password or incorrect login
             pass
-        return render_template("login.html")
         return redirect("/")
 
 def getcryptovalue():
