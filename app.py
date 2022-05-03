@@ -1,7 +1,7 @@
 from flask import Flask,render_template,request,make_response,session,redirect
 import requests
 from cryptoFlaskFunctions import *
-import os,psycopg2,bcrypt,json
+import os,psycopg2,json
 from coinspot import CoinSpot
 COOKIELABEL=['userID','customerNumber']
 homepage= 'home.html'
@@ -18,81 +18,77 @@ print(">>>>>>>>>>>>>>>>>>>>> ",response)
 
 @app.route("/logout")
 def logout():
-    session['useruser'] = None
+    session.clear()
     return redirect("/")
 
-@app.route('/')
-def index():
-    user = request.cookies.get(COOKIELABEL[0]) # Look for previous cookie  
-    #currentuserID = int(request.cookies.get(COOKIELABEL[1])) # Look for previous cookie 
-    opt_param = request.args.get("status")
-    print(opt_param)
-    sess=STATUSS[1]
-    if opt_param is None:
-        if not user: # If there is no previous cookie then make user = ''
-            user = ""
-            sess=STATUSS[0]
-        else:
-            currentuserID = int(request.cookies.get(COOKIELABEL[1])) # Look for previous cookie
-            portfolios = getportfolio(currentuserID)
-            resp = make_response(render_template(homepage,user=user,SESSION_STATUS=sess,portfolios=portfolios))
-            return resp
+def getportfoliodetail(portid,userid):
+    print(session['portfolios'])    
+    pass
+
+@app.route("/login",methods=['GET','POST'])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
     else:
-        resp = make_response(render_template(homepage,user = '',SESSION_STATUS=STATUSS[0]))         
-        deletecookies(resp,COOKIELABEL)
-        return resp    
-    return render_template(homepage,user=user,SESSION_STATUS=sess)
+        # Check if the user exists.
+        # if the user exists setup the session
+        username = request.values.get('uname')
+        password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
+        userid = loginuser(username,password)  
+        if(userid>0): #  user and password correct so log them in One time action
+            session['userid'] = userid
+            session['nick_name'] = username
+            session['portfolios'] = getportfolio(userid) #Add the porfolio summary to the session
+            session['showportfolio'] = 1 # variable to decide if we are displaying a portfolio or not
+            #get the porfolio detail and pass through to the render_template.
+            try:
+                print("The user name = ", username,userid,session['portfolios'][session['showportfolio']])  
+            except:
+                pass
+            # get the portfolio detail  
+            portfolioDetails = getportfolioDetail(session['showportfolio'],userid)  
+            print(portfolioDetails)
+        else: #user does not exist or incorrect password or incorrect login
+            pass
+        return redirect("/")
 
-@app.route('/', methods = ['POST'])
-def addnewuser():  # Registering a new user
-    #   Gather the paramaters
-    nickname = request.form['nick_name']
-    fname = request.form['fname']
-    lname = request.form['lname']
-    password =request.form['pword']
-    resp = make_response(render_template(homepage,user='',SESSION_STATUS=STATUSS[0]))
-    userid = registernewuser(nickname,fname,lname,password)  # returns 1 if registing new user successfull
-    if userid>0:
-        
-        resp = make_response(render_template(homepage,user=nickname,SESSION_STATUS=STATUSS[1])) 
-        paramsList = []
-        paramsList.append(nickname)
-        paramsList.append(userid)
-        addcookies(resp,COOKIELABEL,paramsList) 
-    else: # returns 0 :  New user was not registered successfully.
-        #TODO alert user when the user was not registered.
-        pass  
-    return resp
 
-@app.route('/register')
+@app.route('/',methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        session['nick_name'] = request.form['nick_name'] 
+        session['first_name'] = request.form['fname'] 
+        session['last_name'] = request.form['lname'] 
+        session['password'] = request.form['pword']
+    else:
+        if session.get("userid") :
+            print("Home page no params, however user already logged in")
+            try:
+                print(session['portfolios'][0])
+            except:
+                pass
+            print(getportfolioDetail(1,session['userid']))
+            return render_template(homepage,portfoliodetail=getportfolioDetail(1,session['userid']))
+        else:
+            print("Home page no params, however no user")
+            return render_template(homepage,portfoliodetail="None")
+        pass
+    return render_template(homepage,portfoliodetail=getportfolioDetail(1,2))
+
+@app.route('/register', methods=['GET'])
 def register():
     return render_template("register.html")
 
+@app.route('/register', methods=['POST'])
+def registerLand():
+    return redirect("home.html")
+
 @app.route("/showportfolio", methods=['GET'])
 def showportfolio():
+    portid = request.args.get('portid')
+    # print(portid,getportfolioDetail(int(portid),2))
+    resp = render_template("home.html",portfoliodetail=getportfolioDetail(int(portid),session['userid']))
+    return resp
 
-    return render_template("home.html")
-
-@app.route('/login',methods = ['GET','POST'])
-def login():
-    if request.method == 'POST':
-        username = request.values.get('uname')
-        password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
-        userid = loginuser(username,password)
-        if(userid>0):
-           
-            portfolios = getportfolio(userid)   # Gets all the row data for each portfolio
-            print("PORTFOLIOS",portfolios)            
-            resp = make_response(render_template(homepage,user=username,SESSION_STATUS=STATUSS[1],portfolios=portfolios)) 
-            paramsList = []
-            paramsList.append(username)
-            paramsList.append(str(userid))
-            addcookies(resp,COOKIELABEL,paramsList)            
-            return resp
-        else: #user not in database
-            return render_template(homepage,user='',SESSION_STATUS=STATUSS[0])
-    else: # method is GET
-        return render_template("login.html")
-    pass
 if __name__ == '__main__':
     app.run(debug=True)
