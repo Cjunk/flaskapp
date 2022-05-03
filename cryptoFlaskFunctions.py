@@ -64,6 +64,7 @@ def loginuser(username,hashedpassword):
                     pass
             else:   # If the user doesnt exist
                 print("User doesnt exist")
+                pass
         cur.close()
         conn.close()    
         return retval
