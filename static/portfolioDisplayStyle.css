@@ -22,6 +22,7 @@
     margin: auto;
     border: 5px solid purple;
     border-radius: 15px;
+    grid-column-start: 2;
 }
 .portfolioMenu {
    text-align:center;
@@ -34,6 +35,10 @@
     display:grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
+
+#eachRowInPortfolio .portfoliosubs {
+    border-top: 1px solid black;
+}
 #tableHeading {
     display:grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -44,7 +49,7 @@
     width:80%;
     margin:auto;
     display:grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 1fr 5fr 1fr;
 }
 #eachRowInPortfolio:hover {
     cursor:pointer;
@@ -53,4 +58,23 @@
 }
 .portfolioItems a {
     font-size:26px;
+}
+.right-side-portfolio-panel{
+    text-align: left;;
+}
+.right-side-portfolio-panel button{
+    height:20px;
+    font-size:12px;
+    line-height: 0px;
+    margin:0 2px;
+}
+.bottomrowportfolioDisplay {
+    width:100%;
+}
+.controlPanel {
+    display:grid;
+    grid-template-columns: 1fr 2fr;
+}
+#dialog {
+    width:40%;
 }

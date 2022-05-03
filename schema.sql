@@ -47,11 +47,11 @@ INSERT INTO transaction_types(type_id,tran_type) VALUES(2,'SELL');
 
 INSERT INTO users(nickname,fname,lname,hashed_password) VALUES('Jericho','Jericho','Sharman','e191990b4d37a42f37453cb67edbb16d4c5782e2df3c78bcba21ececdb73056f');
 INSERT INTO users(nickname,fname,lname,hashed_password) VALUES('Sharon','Sharon','Roddis','e191990b4d37a42f37453cb67edbb16d4c5782e2df3c78bcba21ececdb73056f');
-INSERT INTO portfolios(customer_owner,title,starting_cash,current_balance) VALUES(1,'savings',5000000,5000000);
-INSERT INTO portfolios(customer_owner,title,starting_cash,current_balance) VALUES(1,'new one',5000000,5000000);
+INSERT INTO portfolios(customer_owner,title,starting_cash,current_balance) VALUES(1,'savings',50000,50000);
+INSERT INTO portfolios(customer_owner,title,starting_cash,current_balance) VALUES(1,'new one',50000,50000);
 
 INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(1,'BTC',56000,.12);
 INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(1,'ETH',2900,.25);
-INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(1,'XRP',1000,.86);
+INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(1,'XRP',.78,1000);
 
 INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(2,'BTC',56000,.12);

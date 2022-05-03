@@ -6,6 +6,9 @@ body {
 .homecontent {
     text-align: center;
 }
+h1,h2,h3,h4 {
+    margin:15px;
+}
 h2 {
     font-size:26px;
 }
@@ -17,4 +20,10 @@ span {
 .registrationFormWrapper {
     margin: auto;
     width: 15%;
+}
+
+.pagedesign{
+    display:grid;
+    grid-template-columns:  1fr 5fr 1fr;
+    margin: 15px;
 }
