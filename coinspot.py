@@ -1,7 +1,4 @@
-import hmac
-import json
-from time import time
-from hashlib import sha512
+#from time import time
 import requests
 class CoinSpot(object):
     # The endpoint for the API
@@ -15,28 +12,6 @@ class CoinSpot(object):
         # Return the latest public price from Coinpot
         response =  requests.get(self.API_ENDPOINT_PUBLIC +"latest/"+coin).json()['prices']['bid']
         return response
-        
-    def _request(self, path, data=None):
-        if data is None:
-            data = {}
-        data["nonce"] = int(time() * 1000000)
-        json_data = json.dumps(data, separators=(',', ':')).encode()
-        try:
-            return requests.post(
-                self.API_ENDPOINT + path,
-                data=self._chunker(json_data),
-                headers={
-                    "Content-Type": "application/json",
-                    "sign": hmac.new(self.secret, json_data, sha512).hexdigest(),
-                    "key": self.key,
-                }
-            ).json()
-        except requests.exceptions.Timeout:
-            print() ("CONNECTION ERROR: Please check internet connection")
-
-        except requests.exceptions.RequestException as e:
-            print(e)
-            pass
 
     @staticmethod
     def latest(cointype): # returns the latest price

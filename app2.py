@@ -1,7 +1,7 @@
 from flask import Flask,render_template,request,make_response,session,redirect
 import requests
 from cryptoFlaskFunctions import *
-import os,psycopg2,bcrypt,json
+import os,psycopg2,json
 from coinspot import CoinSpot
 COOKIELABEL=['userID','customerNumber']
 homepage= 'home.html'
