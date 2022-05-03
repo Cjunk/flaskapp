@@ -32,11 +32,11 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     else:
-        return render_template("login.html")
         # Check if the user exists.
         # if the user exists setup the session
         username = request.values.get('uname')
         password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
+        return render_template("login.html")
         userid = loginuser(username,password)  
         if(userid>0): #  user and password correct so log them in One time action
             session['userid'] = userid
