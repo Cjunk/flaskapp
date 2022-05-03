@@ -28,10 +28,11 @@ def getportfoliodetail(portid,userid):
 
 @app.route("/login",methods=['GET','POST'])
 def login():
-    return render_template("login.html")
+    
     if request.method == "GET":
         return render_template("login.html")
     else:
+        return render_template("login.html")
         # Check if the user exists.
         # if the user exists setup the session
         username = request.values.get('uname')
