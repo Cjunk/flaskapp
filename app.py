@@ -51,6 +51,7 @@ def login():
             #print(portfolioDetails)
         else: #user does not exist or incorrect password or incorrect login
             pass
+        return render_template("login.html")
         return redirect("/")
 
 def getcryptovalue():
