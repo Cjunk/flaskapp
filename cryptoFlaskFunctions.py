@@ -14,6 +14,16 @@ def addcookies(r,c,l):
         r.set_cookie(each,l[count])
         count = count + 1
     return
+def sellrow(rowId):
+    conn=psycopg2.connect(DATABASE_URL)
+    cur = conn.cursor()
+    postgres_insert_query = """DELETE FROM portfolio_detail WHERE id = %d""" %(int(rowId))
+    cur.execute(postgres_insert_query)
+    conn.commit()
+    
+    cur.close()
+    conn.close()    
+
 def getuserID (username):
         username = username.upper()
         conn=psycopg2.connect(DATABASE_URL)

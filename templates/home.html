@@ -13,23 +13,42 @@
          <a>Control panel</a>
         <button>Buy</button>
         <button>Buy</button> 
-    </div>  --> 
+    </div>  -->
+    <div class="left_hand_portfolio_panel_wrapper">
+        <div class="left_hand_button_panel">
+            <button>New Portfolio</button>
+            <button>Delete portfolio</button>
+            <button>Change name</button>
+        </div>
+        <form action="/buy">
+
+
+            <label for="coin">Choose a crypto:</label>
+            <select id="coin" name="coin">
+                <option value="BTC">BTC</option>
+                <option value="ETH">ETH</option>
+                <option value="XRP">XRP</option>
+                <option value="DOT">DOT</option>
+            </select>
+           
+            <input class="buybut" type="submit" value="BUY">
+             <label>QTY</label>
+            <input>            
+        </form>
+    </div>
     <div class="mainbody" style="grid-column-start: 2;">
         <h2>Welcome <span>{{session['nick_name']}}</span></h2><a id="usernameText">{{user}}</a>
-        <button>Add new portfolio</button>
+
         {% if session['portfolios'] %}
         <div id="Portfolio_Menu">
-            <button>Delete current porfolio</button>
-            <button>Change portfolio name</button>
-            <h2>See your portfolio below</h2>
             <ul id="nobullets">
-                {% for each in session['portfolios'] %}
-                <div class="portfolioMenuItemWrapper">
-                    <li class="portfolioItems"><a href="/showportfolio?portid={{each[0]}}">{{each[2]}}</a>
+                <!-- {% for each in session['portfolios'] %} -->
+                <!-- <div class="portfolioMenuItemWrapper"> -->
+                    <!-- <li class="portfolioItems"><a href="/showportfolio?portid={{each[0]}}">{{each[2]}}</a> -->
                         <!-- <a id="portfolioButtonBox"></a><a id="box"></a> -->
-                    </li>
-                </div>
-                {% endfor %}
+                    <!-- </li> -->
+                <!-- </div> -->
+                <!-- {% endfor %} -->
             </ul>
         </div>
         <!-- TODO -->
@@ -45,19 +64,27 @@
                 </div>
                 {% for each in portfoliodetail %}
                 <div id="eachRowInPortfolio" href="#">
-                    <a>{{each[1]}}</a><a>${{each[2]}}</a><a>{{"%.8f"|format(each[3])}}</a><a>${{totalcosts[loop.index-1]}}</a><a>{{"$%.2f"|format(response[loop.index-1])}}</a>
+                    <a>{{each[2]}}</a><a>${{each[3]}}</a><a>{{"%.8f"|format(each[4])}}</a><a>${{totalcosts[loop.index-1]}}</a><a>{{"$%.2f"|format(response[loop.index-1])}}</a>
                 </div>
                 {% endfor %}
-                <div id="eachRowInPortfolio">
-                    <a></a><a></a><a></a><a class="portfoliosubs">${{totalcosts[3]}}</a><a
-                        class="portfoliosubs">{{"$%.2f"|format(response[3])}}</a>
+                <div id="eachRowInPortfolio2">
+                    <a></a><a></a><a></a><a class="portfoliosubs">${{totalcosts[totalcosts|length - 1]}}</a><a
+                        class="portfoliosubs">{{"$%.2f"|format(response[response|length - 1])}}</a>
                     <!-- <a>{{response[3]}}</a><a></a>{{totalcosts[3]}}</a> -->
                 </div>
             </div>
             <div class="right-side-portfolio-panel">
                 <br>
+                <script>
+                    function sell(rowId) {
+                        console.log("done it", rowId)
+                        window.location = "/sell" + '?rowId=' + rowId
+                    };
+                </script>
                 {% for each in portfoliodetail %}
-                <button class="right-side-portfolio-panel button">sell</button><br>
+                <button class="right-side-portfolio-panel button" id="{{each[0]}}"
+                    onclick="sell(this.id)">sell</button><br>
+
                 {% endfor %}
             </div>
             {% endif %}

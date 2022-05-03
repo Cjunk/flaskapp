@@ -2,19 +2,15 @@ from flask import Flask,render_template,request,make_response,session,redirect
 from cryptoFlaskFunctions import *
 import os
 from coinspot import CoinSpot
-COOKIELABEL=['userID','customerNumber']
-homepage= 'home.html'
-DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
-SECRET_KEY = os.environ.get('SECRET_KEY','pretend secret key')
-STATUSS = ["not logged in","logged in"]
-SESSION_STATUS = STATUSS[0]
+from theConstants import *
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 #   ----------------------------------------------------------------------------------------------------------------------------------------
 sha = hashlib.sha256()  # Do not delete this line as I feel it maybe used to 'randomize' sha256
 cryptoApi = CoinSpot("df",SECRET_KEY)       #
-response = cryptoApi.latestPrice("xrp")     #   These can be deleted, just used to ensure the coinspot class is working and communicating
-print(">>>>>>>>>>>>>>>>>>>>> ",response)    #
+#response = cryptoApi.latestPrice("xrp")     #   These can be deleted, just used to ensure the coinspot class is working and communicating
+#print(">>>>>>>>>>>>>>>>>>>>> ",response)    #
 
 @app.route("/logout")
 def logout():
@@ -56,6 +52,12 @@ def login():
 
 def getcryptovalue():
     pass
+@app.route('/sell',methods=['GET'])
+def sell():
+    rowid=request.args.get('rowId')
+    sellrow(rowid)
+    return redirect("/")
+
 
 @app.route('/',methods=['GET', 'POST'])
 def index():
@@ -67,16 +69,13 @@ def index():
     else:
         if session.get("userid") :
             #print("Home page no params, however user already logged in")
-            try:
-                print("session['portfolios'][0]",session['portfolios'][0])  # print the console the session stored portfolio detail
-            except:
-                pass
             portfolioDetail = getportfolioDetail(1,session['userid'])
+            print(portfolioDetail)
             response = []
             totalcosts = []
             for each in portfolioDetail:
-                response.append(float(cryptoApi.latestPrice(each[1])) * float(each[3]))
-                totalcosts.append(each[2] * each[3])
+                response.append(float(cryptoApi.latestPrice(each[2])) * float(each[PORTFOLIO_DETAIL_QTY]))
+                totalcosts.append(each[PORTFOLIO_DETAIL_PRICE] * each[PORTFOLIO_DETAIL_QTY])
             totalcosts.append(sum(totalcosts))
             response.append(sum(response))
             # Generate the current crypto values from coinspot
@@ -103,8 +102,8 @@ def showportfolio():
     if(portfolioDetail):
 
         for each in portfolioDetail:
-            response.append(float(cryptoApi.latestPrice(each[1])) * float(each[3]))
-            totalcosts.append(each[2] * each[3])
+            response.append(float(cryptoApi.latestPrice(each[2])) * float(each[4]))
+            totalcosts.append(each[3] * each[4])
         totalcosts.append(sum(totalcosts))
         response.append(sum(response))
     resp = render_template("home.html",portfoliodetail=portfolioDetail,response=response,totalcosts=totalcosts)

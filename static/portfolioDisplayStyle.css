@@ -23,6 +23,8 @@
     border: 5px solid purple;
     border-radius: 15px;
     grid-column-start: 2;
+    background-color: #6a93cb;
+    background-image: linear-gradient(315deg, #6a93cb 0%, #a4bfef 74%);
 }
 .portfolioMenu {
    text-align:center;
@@ -35,8 +37,11 @@
     display:grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
-
-#eachRowInPortfolio .portfoliosubs {
+#eachRowInPortfolio2 {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+#eachRowInPortfolio2 .portfoliosubs {
     border-top: 1px solid black;
 }
 #tableHeading {
@@ -45,6 +50,7 @@
     background-color:blueviolet;
     color:white;
 }
+
 .portfolioDisplayBody {
     width:80%;
     margin:auto;
@@ -53,7 +59,7 @@
 }
 #eachRowInPortfolio:hover {
     cursor:pointer;
-    background-color: red;
+
     color:white;
 }
 .portfolioItems a {
@@ -64,10 +70,21 @@
 }
 .right-side-portfolio-panel button{
     height:20px;
+    width:50%;
     font-size:12px;
     line-height: 0px;
     margin:0 2px;
+    text-align:center;
+    background-color: #aecad6;
+    background-image: linear-gradient(315deg, #aecad6 0%, #b8d3fe 74%);
 }
+.right-side-portfolio-panel button:hover{
+    background-color: #96c8fb;
+    background-image: linear-gradient(315deg, #96c8fb 0%, #ddbdfc 100%);
+}
+
+
+
 .bottomrowportfolioDisplay {
     width:100%;
 }
@@ -77,4 +94,13 @@
 }
 #dialog {
     width:40%;
+}
+.left_hand_portfolio_panel_wrapper{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    height:50%;
+}
+.left_hand_button_panel {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
 }

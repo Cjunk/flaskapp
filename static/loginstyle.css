@@ -18,3 +18,9 @@
 .inputstyle {
     border-top-style: 35px;
 }
+.formwrapper {
+    grid-column-start:2;
+    grid-column-end:3;
+    justify-content: center;
+    display:flex;
+}

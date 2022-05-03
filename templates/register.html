@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
 <title>{% block title %} Some text {% endblock %}</title>
 {% block content %}
-<h1>Register New User</h1>
-<nav class="registrationFormWrapper">
-  <form class="form-block" name="register_form" action="/" method="POST" style="text-align: left;">
-    <label for="fname">Nick name:</label><br>
-    <input type="text" id="fname" name="nick_name"><br>
-    <label for="email">email</label><br>
-    <input type="email" id="email" name="fname"><br>
+<content class="pagedesign">
+  <nav class="formwrapper">
+    <form class="form-block" name="register_form" action="/" method="POST" style="text-align: left;">
+      <label for="fname">Nick name:</label><br>
+      <input type="text" id="fname" name="nick_name"><br>
+      <label for="email">email</label><br>
+      <input type="email" id="email" name="fname"><br>
 
-    <label for="lname">Last name:</label><br>
-    <input type="text" id="lname" name="lname"><br>
+      <label for="lname">Last name:</label><br>
+      <input type="text" id="lname" name="lname"><br>
 
-    <label for="pass">Password</label><br>
-    <input type="password" id="pass" name="pword" required minlength="8"><br>
+      <label for="pass">Password</label><br>
+      <input type="password" id="pass" name="pword" required minlength="8"><br>
 
-    <input class="loginBut" type="submit" value="Submit">
-  </form>
-</nav>
+      <input class="loginBut" type="submit" value="Submit">
+    </form>
+  </nav>
+</content>
 {% endblock %}

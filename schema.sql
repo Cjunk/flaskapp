@@ -20,6 +20,7 @@ CREATE TABLE portfolios (
     current_balance FLOAT
 );
 CREATE TABLE portfolio_detail(
+    id SERIAL PRIMARY KEY,
     porfolio_id INTEGER REFERENCES portfolios(id) NOT NULL,
     coin TEXT,
     cost FLOAT,
