@@ -28,6 +28,7 @@ def getportfoliodetail(portid,userid):
 
 @app.route("/login",methods=['GET','POST'])
 def login():
+    return render_template("login.html")
     if request.method == "GET":
         return render_template("login.html")
     else:
