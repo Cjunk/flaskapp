@@ -1,4 +1,4 @@
-import hashlib,psycopg2,os,json
+import hashlib,psycopg2,os
 DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
 SECRET_KEY = os.environ.get('SECRET_KEY','pretend secret key')
 def deletecookies(r,c):
