@@ -36,8 +36,8 @@ def login():
         # if the user exists setup the session
         username = request.values.get('uname')
         password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
-        return render_template("login.html")
-        userid = loginuser(username,password)  
+        userid = loginuser(username,password) 
+        return render_template("login.html") 
         if(userid>0): #  user and password correct so log them in One time action
             session['userid'] = userid
             session['nick_name'] = username
