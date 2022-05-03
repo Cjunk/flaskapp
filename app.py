@@ -42,13 +42,13 @@ def login():
             session['portfolios'] = getportfolio(userid) #Add the porfolio summary to the session
             session['showportfolio'] = 1 # variable to decide if we are displaying a portfolio or not
             #get the porfolio detail and pass through to the render_template.
-            try:
-                print("The user name = ", username,userid,session['portfolios'][session['showportfolio']])  
-            except:
-                pass
+            # try:
+            #     print("The user name = ", username,userid,session['portfolios'][session['showportfolio']])  
+            # except:
+            #     pass
             # get the portfolio detail  
-            portfolioDetails = getportfolioDetail(session['showportfolio'],userid)  
-            print(portfolioDetails)
+            #portfolioDetails = getportfolioDetail(session['showportfolio'],userid)  
+            #print(portfolioDetails)
         else: #user does not exist or incorrect password or incorrect login
             pass
         return redirect("/")
