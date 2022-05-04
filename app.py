@@ -42,7 +42,6 @@ def login():
         password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
         
         userid = loginuser(username,password) 
-        return redirect("/")
         if(userid>0): #  user and password correct so log them in One time action
             session['userid'] = userid
             session['portfolioID']= get_portfolioID_fromuserID(userid) # ASSUMPTION of only one portfolio per person TODO Change this to accomodate multiple portfolios

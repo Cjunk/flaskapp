@@ -93,10 +93,9 @@ def loginuser(username,hashedpassword):
         cur = conn.cursor()
         retval = 0
         username = str(username).upper()
-        postgres_insert_query = """SELECT hashed_password,id FROM users WHERE UPPER(nickname) Like '%s'""" %(username)
-        return retval
-        cur.execute(postgres_insert_query)
-        return retval
+        postgres_insert_query = """SELECT hashed_password,id FROM users WHERE UPPER(nickname) = %s"""
+        values_to_insert = [username.upper()] 
+        cur.execute(postgres_insert_query,values_to_insert)  # causing crash on HEROKU
         rows = cur.fetchone()
         if cur.rowcount > 0:
             usershashedPassword = rows[0] # retrieve the first result
