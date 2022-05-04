@@ -40,6 +40,7 @@ def login():
         # if the user exists setup the session
         username = request.values.get('uname')
         password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
+        return redirect("/")
         userid = loginuser(username,password) 
         
         if(userid>0): #  user and password correct so log them in One time action
