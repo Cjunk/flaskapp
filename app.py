@@ -2,7 +2,6 @@ from flask import Flask,render_template,request,make_response,session,redirect
 from cryptoFlaskFunctions import *
 from coinspot import CoinSpot
 from theConstants import *
-import json
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 #   ----------------------------------------------------------------------------------------------------------------------------------------

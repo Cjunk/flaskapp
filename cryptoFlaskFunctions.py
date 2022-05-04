@@ -1,5 +1,4 @@
 import hashlib,psycopg2,os
-from platformdirs import user_runtime_dir
 from flask import session
 OFF = False
 ON = True
