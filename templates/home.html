@@ -6,56 +6,46 @@
 {% if user != '' %}
 {% if session['userid'] %}
 <content class="pagedesign">
-    <!-- <dialog id="dialog">
-        {% include "buycoin.html" %}
-    </dialog> -->
-    <!-- <div class="controlPanel">
-         <a>Control panel</a>
-        <button>Buy</button>
-        <button>Buy</button> 
-    </div>  -->
+
     <div class="left_hand_portfolio_panel_wrapper">
         <div class="left_hand_button_panel">
             <button>New Portfolio</button>
             <button>Delete portfolio</button>
             <button>Change name</button>
         </div>
-        <form action="/buy">
-
-
-            <label for="coin">Choose a crypto:</label>
+        <form action="/buy" class="buyform">
+            <label for="coin">Crypto:</label>
             <select id="coin" name="coin">
-                <option value="BTC">BTC</option>
-                <option value="ETH">ETH</option>
-                <option value="XRP">XRP</option>
-                <option value="DOT">DOT</option>
+                {% for each in currentpricelist %}
+                <option value="{{each}}">{{each}} {{currentpricelist[each]}}</option>
+                {% endfor %}
             </select>
-           
-            <input class="buybut" type="submit" value="BUY">
-             <label>QTY</label>
-            <input>            
+        
+            <label for="qtyinput">QTY</label>
+            <input id="qtyinput">  
+            <div></div>
+            <div></div>
+            <div></div>
+            <button type="button">max</button>
+            <div></div>
+            <div></div>
+            <label for="qtyinput">Amount</label>
+            <a id="calculatedAmount">the amount</a>
+
+            <input class="buybut" type="submit" value="BUY">                      
         </form>
     </div>
     <div class="mainbody" style="grid-column-start: 2;">
-        <h2>Welcome <span>{{session['nick_name']}}</span></h2><a id="usernameText">{{user}}</a>
+        <h2>Welcome <span class="username" >{{session['nick_name']}}</span></h2>
 
         {% if session['portfolios'] %}
         <div id="Portfolio_Menu">
-            <ul id="nobullets">
-                <!-- {% for each in session['portfolios'] %} -->
-                <!-- <div class="portfolioMenuItemWrapper"> -->
-                    <!-- <li class="portfolioItems"><a href="/showportfolio?portid={{each[0]}}">{{each[2]}}</a> -->
-                        <!-- <a id="portfolioButtonBox"></a><a id="box"></a> -->
-                    <!-- </li> -->
-                <!-- </div> -->
-                <!-- {% endfor %} -->
-            </ul>
         </div>
         <!-- TODO -->
         <!-- Display the first portfolio: Demonstration purposes  -->
         {% if session['showportfolio'] > 0 %}
         <a id="portfolioTextHeading">Remaining Balance
-            <span>{{"$%.2f"|format(session['portfolios'][session['showportfolio']-1][4])}}</span></a>
+            <span >{{"$%.2f"|format(session['portfolios'][session['showportfolio']-1][4])}}</span></a>
         <div class="portfolioDisplayBody">
             {% if portfoliodetail %}
             <div class="portfolioDisplayWrapper">
@@ -64,27 +54,33 @@
                 </div>
                 {% for each in portfoliodetail %}
                 <div id="eachRowInPortfolio" href="#">
-                    <a>{{each[2]}}</a><a>${{each[3]}}</a><a>{{"%.8f"|format(each[4])}}</a><a>${{totalcosts[loop.index-1]}}</a><a>{{"$%.2f"|format(response[loop.index-1])}}</a>
+                    <a>{{each[2]}}</a><a>${{each[3]}}</a><a>{{"%.8f"|format(each[4])}}</a><a>${{totalcosts[loop.index-1]}}</a>
+                    {% if response[loop.index-1] > totalcosts[loop.index-1] %}
+                        <a class="green">
+                    {% elif response[loop.index-1] < totalcosts[loop.index-1]%}
+                        <a class="red">
+                    {% else %}
+                        <a class="black"></a>
+                    {% endif %}
+                    {{"$%.2f"|format(response[loop.index-1])}}</a>
                 </div>
                 {% endfor %}
                 <div id="eachRowInPortfolio2">
                     <a></a><a></a><a></a><a class="portfoliosubs">${{totalcosts[totalcosts|length - 1]}}</a><a
                         class="portfoliosubs">{{"$%.2f"|format(response[response|length - 1])}}</a>
-                    <!-- <a>{{response[3]}}</a><a></a>{{totalcosts[3]}}</a> -->
                 </div>
             </div>
             <div class="right-side-portfolio-panel">
                 <br>
+                <br>
                 <script>
-                    function sell(rowId) {
-                        console.log("done it", rowId)
-                        window.location = "/sell" + '?rowId=' + rowId
+                    function sell(rowId,amount) {
+                        window.location = "/sell" + '?rowId=' + rowId +"&amount=" + amount 
                     };
                 </script>
                 {% for each in portfoliodetail %}
-                <button class="right-side-portfolio-panel button" id="{{each[0]}}"
-                    onclick="sell(this.id)">sell</button><br>
-
+                <button class="right-side-portfolio-panel button" id="{{each[0]}}" name="{{response[loop.index-1]}}"
+                    onclick="sell(this.id,this.name)">sell</button><br>
                 {% endfor %}
             </div>
             {% endif %}
