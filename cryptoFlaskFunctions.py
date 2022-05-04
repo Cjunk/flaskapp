@@ -94,6 +94,7 @@ def loginuser(username,hashedpassword):
         retval = 0
         username = str(username).upper()
         postgres_insert_query = """SELECT hashed_password,id FROM users WHERE UPPER(nickname) Like '%s'""" %(username)
+        return retval
         cur.execute(postgres_insert_query)
         return retval
         rows = cur.fetchone()
