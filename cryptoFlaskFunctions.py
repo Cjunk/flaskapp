@@ -1,28 +1,60 @@
 import hashlib,psycopg2,os
+from platformdirs import user_runtime_dir
+from flask import session
+OFF = False
+ON = True
+MASTER_DEBUG = OFF
+
+if MASTER_DEBUG:
+    SQL_DEBUG = ON
+else:
+    SQL_DEBUG = OFF
 DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
 SECRET_KEY = os.environ.get('SECRET_KEY','pretend secret key')
-def deletecookies(r,c):
-    # This funcion will delete all the cookies passed to it
-    # USAGE deletecookies(the response,[An array of cookie labels]])
-    for each in c:
-        r.delete_cookie(each)
-    return
-def addcookies(r,c,l):
-    count = 0
-    for each in c:
-        print("ffffffffffffffffffffffffffffffffffff",each,count,l)
-        r.set_cookie(each,l[count])
-        count = count + 1
-    return
-def sellrow(rowId):
+
+def buycoin(coin,price,qty):
+    if SQL_DEBUG:
+        print("This is the coin",coin,"PORTFOLIO ID =",session['portfolioID'])
+        print("THE AMOUNT PASSED IS = ",price)
+        print("THE QTY PASSED IS = ",qty)
+    else:
+        conn=psycopg2.connect(DATABASE_URL)
+        cur = conn.cursor()   
+        cost = float(price) * float(qty)     
+        postgres_insert_query = """INSERT INTO portfolio_detail (porfolio_id, coin, cost, quantity) VALUES (%s,%s,%s,%s)"""
+        values_to_insert = [int(session['portfolioID']),coin.upper(),price,qty]  
+        cur.execute(postgres_insert_query,values_to_insert)
+        postgres_insert_query = """UPDATE portfolios SET current_balance = current_balance - %d WHERE id = %d""" %(float(cost),int(session['portfolioID']))
+        cur.execute(postgres_insert_query)
+        conn.commit()        
+        cur.close()
+        conn.close()
+    pass
+
+def sellrow(rowId,amount):
+    if SQL_DEBUG:
+        print("This is the row id",rowId,"PORTFOLIO ID =",session['portfolioID'])
+        print("THE AMOUNT PASSED IS = ",amount)
+    else:
+        conn=psycopg2.connect(DATABASE_URL)
+        cur = conn.cursor()        
+        postgres_insert_query = """DELETE FROM portfolio_detail WHERE id = %d""" %(int(rowId))
+        cur.execute(postgres_insert_query)
+        postgres_insert_query = """UPDATE portfolios SET current_balance = current_balance + %d WHERE id = %d""" %(float(amount),int(session['portfolioID']))
+        cur.execute(postgres_insert_query)
+        conn.commit()        
+        cur.close()
+        conn.close()
+
+def getuserid_from_portfolioID(portid):
     conn=psycopg2.connect(DATABASE_URL)
     cur = conn.cursor()
-    postgres_insert_query = """DELETE FROM portfolio_detail WHERE id = %d""" %(int(rowId))
+    postgres_insert_query = """SELECT customer_owner FROM portfolios WHERE id=%d""" %(portid)
     cur.execute(postgres_insert_query)
-    conn.commit()
-    
+    userid = cur.fetchone()
     cur.close()
-    conn.close()    
+    conn.close()
+    return userid
 
 def getuserID (username):
         username = username.upper()
@@ -30,6 +62,7 @@ def getuserID (username):
         cur = conn.cursor()
         postgres_insert_query = """SELECT id FROM users WHERE UPPER(nickname) Like '%s'""" %(username)
         cur.execute(postgres_insert_query)
+        
         cur.close()
         conn.close()
 def registernewuser(nickname,firstname,lastname,password):
@@ -68,7 +101,6 @@ def loginuser(username,hashedpassword):
             usershashedPassword = rows[0] # retrieve the first result
             if usershashedPassword:
                 if usershashedPassword == hashedpassword:# successfull login
-                    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", username,rows,cur.rowcount,cur.fetchall())
                     retval = rows[1] # get the user id
                 else:
                     pass
@@ -78,7 +110,7 @@ def loginuser(username,hashedpassword):
         cur.close()
         conn.close()    
         return retval
-def getportfolio(userid): # Gets the porftolios from the dataabase for the user
+def getportfolio(userid): # Gets the porftolios from the database for the user
     conn=psycopg2.connect(DATABASE_URL)
     cur = conn.cursor()  
     postgres_insert_query = """SELECT * FROM portfolios WHERE customer_owner = %s""" %(userid)    
@@ -91,11 +123,10 @@ def getportfolio(userid): # Gets the porftolios from the dataabase for the user
     conn.close() 
     return results
 def getportfolioDetail(portid,userid):
-    #print("The portfolio I am looking for is ",portid,"And its type is ",type(portid))
-    # retrieves all the detail for a single portfolio
+    # retrieves all the detail for a single portfolio from the database
     conn=psycopg2.connect(DATABASE_URL)
     cur = conn.cursor()
-    postgres_insert_query = """SELECT * FROM portfolio_detail WHERE porfolio_id = %s""" %(portid)    
+    postgres_insert_query = """SELECT * FROM portfolio_detail WHERE porfolio_id = %s ORDER BY coin""" %(portid)    
     cur.execute(postgres_insert_query)
     if cur.rowcount > 0:
         results = cur.fetchall()
@@ -111,3 +142,20 @@ def getuserid_byusername(username):
     cur.execute(postgres_insert_query) 
     cur.close()
     conn.close() 
+
+def get_portfolioID_fromuserID(userid):
+    # SELECT * FROM portfolios WHERE customer_owner = 1;
+    conn=psycopg2.connect(DATABASE_URL)
+    cur = conn.cursor()
+    postgres_insert_query = """SELECT id FROM portfolios WHERE customer_owner = %d""" %(userid)    
+    cur.execute(postgres_insert_query)
+    if cur.rowcount > 0:
+        results = cur.fetchone()[0]
+    else:
+        results = None
+    cur.close()
+    conn.close()
+    return results
+
+
+

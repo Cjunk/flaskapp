@@ -19,12 +19,13 @@
 }
 .portfolioDisplayWrapper {
     width:100%;
-    margin: auto;
+    margin: 2% auto;
     border: 5px solid purple;
     border-radius: 15px;
     grid-column-start: 2;
     background-color: #6a93cb;
     background-image: linear-gradient(315deg, #6a93cb 0%, #a4bfef 74%);
+    filter: drop-shadow(0 0 0.75rem crimson);
 }
 .portfolioMenu {
    text-align:center;
@@ -97,10 +98,63 @@
 }
 .left_hand_portfolio_panel_wrapper{
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     height:50%;
 }
 .left_hand_button_panel {
     display:grid;
     grid-template-columns: 1fr 1fr;
 }
+.red {
+    background:red;
+}
+.green {
+    background:green;
+    animation: shake 0.5s;
+    animation-iteration-count: 50s;
+}
+.black {
+    background:grey;
+}
+.username{
+    color:Orange;
+    font-size:36px;
+}
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+.buyform {
+    border:1px red solid;
+    padding:5px;
+    width:100%;
+    margin:15px auto;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap:5px;
+}
+.buybutDisabled {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    background:red;
+    color:white;
+}
+.buybutEnabled {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    background:green;
+    color:white;
+}
+.buybutEnabled:hover {
+    cursor:pointer;
+}
+
