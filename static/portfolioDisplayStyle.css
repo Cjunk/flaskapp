@@ -199,7 +199,7 @@
     border: 1px red solid;
     padding: 5px;
     width: 100%;
-    margin: 10% auto;
+    margin: 10%;
     display: grid;
     border-radius: 15px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -247,8 +247,8 @@
 #myVideo {
     position: absolute;
     right: 0;
-    max-height: 50px;
+
     min-width: 100%;
-    min-height: 80%;
+    min-height: 100%;
 
 }
