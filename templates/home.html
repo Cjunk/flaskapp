@@ -7,13 +7,19 @@
 
 {% if user != '' %}
 {% if session['userid'] %}
+    <div id="videowrapper">
+        <video playsinline autoplay muted loop id="myVideo">
+            <!-- https://dribbble.com/shots/16975390-NDAX-Coin-scene -->
+            <source src="static/NDAX_Dribbble_coins_2.mp4" type="video/mp4">
+        </video>
+    </div>
 <content class="pagedesign">
 
     <div class="left_hand_portfolio_panel_wrapper">
         <div class="left_hand_button_panel">
-            <button>New Portfolio</button>
-            <button>Delete portfolio</button>
-            <button>Change name</button>
+            <button style="visibility: hidden">New Portfolio</button>
+            <button style="visibility: hidden">Delete portfolio</button>
+            <button style="visibility: hidden">Change name</button>
         </div>
         <form action="/buy" class="buyform" onkeydown="return event.key != 'Enter';">
             <label for="coin">Crypto:</label>
@@ -22,9 +28,9 @@
                 <option value="{{each}},{{currentpricelist[each]}}">{{each}} {{currentpricelist[each]}}</option>
                 {% endfor %}
             </select>
-        
+
             <label for="qtyinput">QTY</label>
-            <input input type="float" min="0" id="qtyinput" name="qty">  
+            <input input type="float" min="0" id="qtyinput" name="qty">
             <div></div>
             <div></div>
             <div></div>
@@ -33,13 +39,13 @@
             <div></div>
             <label for="qtyinput">Amount</label>
             <div>
-            <p id="calculatedAmount">the amount</p>
+                <p id="calculatedAmount">the amount</p>
             </div>
-            <input id="buybut" class="buybutDisabled" type="submit" value="BUY" disabled>                      
+            <input id="buybut" class="buybutDisabled" type="submit" value="BUY" disabled>
         </form>
     </div>
     <div class="mainbody" style="grid-column-start: 2;">
-        <h2>Welcome <span class="username" >{{session['nick_name']}}</span></h2>
+        <h2>Welcome <span class="username">{{session['nick_name']}}</span></h2>
 
         {% if session['portfolios'] %}
         <div id="Portfolio_Menu">
@@ -48,7 +54,8 @@
         <!-- Display the first portfolio: Demonstration purposes  -->
         {% if session['showportfolio'] > 0 %}
         <a id="portfolioTextHeading">Remaining Balance
-            <p id="currentBalance">{{"%.2f"|format(session['portfolios'][session['showportfolio']-1][4])}}</p></a>
+            <p id="currentBalance">{{"%.2f"|format(session['portfolios'][session['showportfolio']-1][4])}}</p>
+        </a>
         <div class="portfolioDisplayBody">
             {% if portfoliodetail %}
             <div class="portfolioDisplayWrapper">
@@ -59,18 +66,17 @@
                 <div id="eachRowInPortfolio" href="#">
                     <a>{{each[2]}}</a><a>${{each[3]}}</a><a>{{"%.2f"|format(each[4])}}</a><a>${{"%.2f"|format(totalcosts[loop.index-1])}}</a>
                     {% if response[loop.index-1] > totalcosts[loop.index-1] %}
-                        <a class="green">
-                    {% elif response[loop.index-1] < totalcosts[loop.index-1]%}
-                        <a class="red">
-                    {% else %}
-                        <a class="black">
-                    {% endif %}
-                    {{"$%.2f"|format(response[loop.index-1])}}</a>
+                    <a class="green">
+                        {% elif response[loop.index-1] < totalcosts[loop.index-1]%} <a class="red">
+                            {% else %}
+                            <a class="black">
+                                {% endif %}
+                                {{"$%.2f"|format(response[loop.index-1])}}</a>
                 </div>
                 {% endfor %}
                 <div id="eachRowInPortfolio2">
-                    <a></a><a></a><a></a><a class="portfoliosubs">${{"%.2f"|format(totalcosts[totalcosts|length - 1])}}</a><a
-                        class="portfoliosubs">{{"$%.2f"|format(response[response|length - 1])}}</a>
+                    <a></a><a></a><a></a><a class="portfoliosubs">${{"%.2f"|format(totalcosts[totalcosts|length -
+                        1])}}</a><a class="portfoliosubs">{{"$%.2f"|format(response[response|length - 1])}}</a>
                 </div>
             </div>
             <div class="right-side-portfolio-panel">

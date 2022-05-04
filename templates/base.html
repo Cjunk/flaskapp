@@ -23,7 +23,7 @@
     </script>
 </head>
 
-<body>
+<body >
     <header class="header">
         <nav class="navigation-bar">
             <img src="static/12-01.png" class="bannerImage" alt="Girl in a jacket" width="2048px" height="60px">
@@ -34,16 +34,20 @@
                 {% else %}
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
+                {% endif %}
             </ul>
-            {% endif %}
-            </ul>
+            
         </nav>
 
     </header>
     <content>
-    {%block content %}
-    {% endblock content %}
-</content>
+        {%block content %}
+        {% endblock content %}
+    </content>
 </body>
+<footer id="footer">
+    <img src="static/Gold coin Bitcoin.gif" class="bannerImage" alt="Girl in a jacket" width="5%" height="5%">
+    <!-- <img src="static/12-01.png" class="bannerImage" alt="Girl in a jacket" width="2048px" height="60px"> -->
+</footer>
 
 </html>

@@ -83,7 +83,9 @@
     background-color: #96c8fb;
     background-image: linear-gradient(315deg, #96c8fb 0%, #ddbdfc 100%);
 }
-
+#portfolioTextHeading {
+    color:gold;
+}
 
 
 .bottomrowportfolioDisplay {
@@ -104,6 +106,7 @@
 .left_hand_button_panel {
     display:grid;
     grid-template-columns: 1fr 1fr;
+    padding:5% 0;
 }
 .red {
     background:red;
@@ -137,10 +140,14 @@
     border:1px red solid;
     padding:5px;
     width:100%;
-    margin:15px auto;
+    margin:10% auto;
     display:grid;
+    border-radius:15px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap:5px;
+    background-color: #6a93cb;
+    box-shadow: #aecad6;
+    filter: drop-shadow(0 0 0.75rem crimson);
 }
 .buybutDisabled {
     grid-column-start: 1;
@@ -157,4 +164,27 @@
 .buybutEnabled:hover {
     cursor:pointer;
 }
+#calculatedAmount {
+    border:2px solid green;
+    text-align:center;
+    margin:auto;
+    filter: drop-shadow(0 0 0.75rem crimson);
+}
+#videowrapper {
+
+    z-index: -5;
+    text-align: center;
+    display: flex;
+
+    justify-content: center;  
+    position: relative;
+}
+#myVideo {
+    position: absolute;
+    right: 0;
+
+    min-width: 100%;
+    min-height: 100%;
+
+  }
 
