@@ -28,12 +28,12 @@
         <nav class="navigation-bar">
             <img src="static/12-01.png" class="bannerImage" alt="Girl in a jacket" width="2048px" height="60px">
             <ul id="navlink">
-                <li><a href="/">Home</a></li>
+                <li><a class="menuitem" href="/">Home</a></li>
                 {% if session['nick_name'] %}
-                <li><a href="/logout">Logout</a></li>
+                <li><a class="menuitem" href="/logout">Logout</a></li>
                 {% else %}
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
+                <li><a class="menuitem" href="/login">Login</a></li>
+                <li><a class="menuitem" href="/register">Register</a></li>
                 {% endif %}
             </ul>
             
@@ -41,7 +41,14 @@
 
     </header>
     <content>
+        <div id="videowrapper">
+            <video playsinline autoplay muted loop id="myVideo">
+                <!-- https://dribbble.com/shots/16975390-NDAX-Coin-scene -->
+                <source src="static/NDAX_Dribbble_coins_2.mp4" type="video/mp4">
+            </video>
+        </div>
         {%block content %}
+
         {% endblock content %}
     </content>
 </body>

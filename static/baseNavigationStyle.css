@@ -1,5 +1,5 @@
 .navigation-bar {
-    height: 100px;
+    height: 50px;;
 }
 
 .mainbody {
@@ -24,14 +24,16 @@ header {
     margin: 0;
     padding: 0;
 }
-
+.menuitem {
+    margin:0;
+}
 #navlink {
     margin: 0;
     padding: 0;
     display: block;
     overflow: hidden;
     list-style-type: none;
-    background-color:#111111;
+
 }
 
 #nobullets {
@@ -40,16 +42,17 @@ header {
 }
 
 #navlink li {
-    line-height: 50px;
-    font-size: 26px;
+    line-height: 20px;
+    font-size: 18px;
     width: 10%;
-    background: #333333;
+    background: #2916cf;
     margin: 2px;
     text-align: center;
     z-index: 4;
     float: left;
     text-align: center;
-    text-decoration: none;    
+    text-decoration: none;  
+    color:white;  
 }
 
 #navlink li:hover {
