@@ -1,8 +1,7 @@
 import os
 homepage= 'home.html'
 COOKIELABEL=['userID','customerNumber']
-DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
-SECRET_KEY = os.environ.get('SECRET_KEY','pretend secret key')
+
 STATUSS = ["not logged in","logged in"]
 SESSION_STATUS = STATUSS[0]
 # PORTFOLIO DETAILS
