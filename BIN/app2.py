@@ -1,12 +1,12 @@
 from flask import Flask,render_template,request,make_response,session,redirect
 import requests
-from cryptoFlaskFunctions import *
+from project2.flaskapp.imports.cryptoFlaskFunctions import *
 <<<<<<< HEAD
 import os,psycopg2,json
 =======
 import os,psycopg2,bcrypt,json
 >>>>>>> 8218013470f03bc80c9882a349a594466bdc14e3
-from coinspot import CoinSpot
+from project2.flaskapp.imports.coinspot import CoinSpot
 COOKIELABEL=['userID','customerNumber']
 homepage= 'home.html'
 DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database

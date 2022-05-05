@@ -1,37 +1,26 @@
 from flask import Flask,render_template,request,make_response,session,redirect
-from cryptoFlaskFunctions import *
-from coinspot import CoinSpot
-from theConstants import *
+from imports.cryptoFlaskFunctions import *
+from imports.coinspot import CoinSpot
+from imports.theConstants import *
 DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
 SECRET_KEY = os.environ.get('SECRET_KEY','pretend secret key')
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 #   ----------------------------------------------------------------------------------------------------------------------------------------
-sha = hashlib.sha256()  # Do not delete this line as I feel it maybe used to 'randomize' sha256
-cryptoApi = CoinSpot("df",SECRET_KEY)       #
-#response = cryptoApi.latestPrice("xrp")     #   These can be deleted, just used to ensure the coinspot class is working and communicating
-#print(">>>>>>>>>>>>>>>>>>>>> ",response)    #
-#print("USER ID = ",getuserid_from_portfolioID(2)[0])
-#print("Portfolio id = " ,get_portfolioID_fromuserID(1))
-
-
+# sha = hashlib.sha256()  # Do not delete this line as I feel it maybe used to 'randomize' sha256
+cryptoApi = CoinSpot("df",SECRET_KEY)   
 def getallprices():
+    #   Function to gather all available coin prices from the API
     currentpricelist = {}
     allprices = cryptoApi.latestsall().json()
-    for each in allprices['prices']:
+    for each in allprices['prices']:    #   Filter the list by removing redunant data
         currentpricelist[each]=allprices['prices'][each]['bid']
     return currentpricelist
-    
-getallprices()
+     
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect("/")
-
-def getportfoliodetail(portid,userid):
-    print(session['portfolios'])  
-    # TODO determine Return data   
-    pass
 
 @app.route("/login",methods=['GET','POST'])
 def login():
@@ -42,7 +31,6 @@ def login():
         # if the user exists setup the session
         username = request.values.get('uname')
         password = hashlib.sha256(str(request.values.get('pword')).encode('utf-8')).hexdigest()
-        
         userid = loginuser(username,password) 
         if(userid>0): #  user and password correct so log them in One time action
             session['userid'] = userid
@@ -51,17 +39,16 @@ def login():
             session['portfolios'] = getportfolio(userid) #Add the porfolio summary to the session
             session['showportfolio'] = 1 # variable to decide if we are displaying a portfolio or not
         else: #user does not exist or incorrect password or incorrect login
-            pass
+            pass # TODO Create an alert etc to advise the user that the user doesnt exist
         return redirect("/")
 
-def getcryptovalue():
-    pass
 @app.route('/buy',methods=['GET'])
 def buy():
-    coin=request.args.get('coin').split(',')[0]
-    price=request.args.get('coin').split(',')[1]
+    coin=request.args.get('coin').split(',')[0]     #   Get the COIN 
+    price=request.args.get('coin').split(',')[1]    #   Get the coin price
     qty=request.args.get('qty')
     buycoin(coin,price,qty)
+    session['portfolios'] = getportfolio(session['portfolioID']) #Add the porfolio summary to the session
     return redirect("/")
 
 @app.route('/sell',methods=['GET'])
@@ -72,12 +59,10 @@ def sell():
     session['portfolios'] = getportfolio(session['portfolioID']) #Add the porfolio summary to the session
     return redirect("/")
 
-
 @app.route('/',methods=['GET', 'POST'])
 def index():
     currentpricelist = getallprices()       # update from coinpot the latest prices. passed to the html
-    print("THE SESSION VALUE = ",session)
-    if request.method == 'POST':
+    if request.method == 'POST':    #   Path taken when registering
         session['nick_name'] = request.form['nick_name'] 
         session['first_name'] = request.form['fname'] 
         session['last_name'] = request.form['lname'] 
@@ -86,7 +71,6 @@ def index():
         if session.get("userid") :
             portfolioDetail = getportfolioDetail(session['portfolioID'],session['userid'])
             session['portfolios'] = getportfolio(session['portfolioID']) #Add the porfolio summary to the session
-            print("PORFOLIO ID: route('/')  index() Line 72 : ",portfolioDetail)
             response = []
             totalcosts = []
             if(portfolioDetail):
@@ -97,7 +81,6 @@ def index():
                 response.append(sum(response))
             return render_template(homepage,portfoliodetail=portfolioDetail,response=response,totalcosts=totalcosts,currentpricelist=currentpricelist)
         else:
-            #print("Home page no params, however no user")
             return render_template(homepage,portfoliodetail="None")
     return render_template(homepage,portfoliodetail=getportfolioDetail(1,2))
 
@@ -106,24 +89,7 @@ def register():
     if request.method == 'GET':
         return render_template("register.html")
     else:
-        return redirect("home.html")
+        return redirect(homepage)
 
-
-# Not used in project. This is where the user can have mutliple portfolios
-@app.route("/showportfolio", methods=['GET'])
-def showportfolio():
-    portid = request.args.get('portid')
-    portfolioDetail=getportfolioDetail(int(portid),session['userid'])
-    response = []
-    totalcosts = []    
-    if(portfolioDetail):
-
-        for each in portfolioDetail:
-            response.append(float(cryptoApi.latestPrice(each[2])) * float(each[4]))
-            totalcosts.append(each[3] * each[4])
-        totalcosts.append(sum(totalcosts))
-        response.append(sum(response))
-    resp = render_template("home.html",portfoliodetail=portfolioDetail,response=response,totalcosts=totalcosts)
-    return resp
 if __name__ == '__main__':
     app.run(debug=True)

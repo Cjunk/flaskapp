@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 <title>Crypto {% block title %} Login {% endblock %}</title>
 {% block content %}
+<link rel="stylesheet" href="static/form.css">
 <content class="pagedesign">
   <div class="formwrapper">
     <form name="login_form" action="/login" method="POST" style="text-align: left;">
-      <label  class="formlabel" for="uname">User name:</label><br>
+      <label class="formlabel" for="uname">User name:</label><br>
       <input type="text" id="uname" name="uname" class="inputstyle"><br>
 
-      <label  class="formlabel" for="pass">Password</label><br>
-      <input type="password" id="pass" name="pword" required minlength="8" class="inputstyle"><br>
+      <label class="formlabel" for="pass">Password</label><br>
+      <input type="password" id="pass" name="pword" required minlength="8" ><br>
 
-      <input class="loginBut" type="submit" value="login">
+      <input class="formBut" type="submit" value="login">
     </form>
   </div>
 </content>

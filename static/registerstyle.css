@@ -1,8 +1,0 @@
-.registrationFormWrapper {
-    grid-column-start:2;
-    grid-column-end:3;
-    justify-content: center;
-}
-.formlabel{
-    color:yellow
-}

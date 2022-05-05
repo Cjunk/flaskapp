@@ -10,10 +10,6 @@
     <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="static/baseNavigationStyle.css">
     <link rel="stylesheet" href="static/portfolioDisplayStyle.css">
-    <link rel="stylesheet" href="static/loginstyle.css">
-    <link rel="stylesheet" href="static/form.css">
-    <link rel="stylesheet" href="static/registerstyle.css">
-
     <title>Crypto {% block title %} Home {% endblock %}</title>
     <script>
         function DoPost() {
@@ -23,7 +19,7 @@
     </script>
 </head>
 
-<body >
+<body>
     <header class="header">
         <nav class="navigation-bar">
             <img src="static/12-01.png" class="bannerImage" alt="Girl in a jacket" width="2048px" height="60px">
@@ -36,9 +32,7 @@
                 <li><a class="menuitem" href="/register">Register</a></li>
                 {% endif %}
             </ul>
-            
         </nav>
-
     </header>
     <content>
         <div id="videowrapper">
@@ -48,12 +42,11 @@
             </video>
         </div>
         {%block content %}
-
         {% endblock content %}
     </content>
 </body>
 <footer id="footer">
-    <img src="static/Gold coin Bitcoin.gif" class="bannerImage" alt="Girl in a jacket" width="5%" height="5%">
+    <!-- <img src="static/Gold coin Bitcoin.gif" class="bannerImage" alt="Girl in a jacket" width="5%" height="5%"> -->
     <!-- <img src="static/12-01.png" class="bannerImage" alt="Girl in a jacket" width="2048px" height="60px"> -->
 </footer>
 

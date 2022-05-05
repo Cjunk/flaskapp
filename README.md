@@ -1,7 +1,9 @@
 # flaskapp
 Crypto Portfolio Tracker
 
-An online crypto currency portfolio tracker with live coin price data
+An online crypto currency portfolio tracker with live coin price data.
+
+
 
 
 Flask server

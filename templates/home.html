@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
-
-
 <title>{% block title %} Home {% endblock %}</title>
-
 {% block content %}
-
+<link rel="stylesheet" href="static/form.css">
 {% if user != '' %}
 {% if session['userid'] %}
     <div id="videowrapper">
@@ -28,7 +25,6 @@
                 <option value="{{each}},{{currentpricelist[each]}}">{{each}} {{currentpricelist[each]}}</option>
                 {% endfor %}
             </select>
-
             <label for="qtyinput">QTY</label>
             <input input type="float" min="0" id="qtyinput" name="qty">
             <div></div>
