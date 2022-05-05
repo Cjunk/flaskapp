@@ -100,6 +100,7 @@ allprices = cryptoApi.latestsall().json()
 - Reduce size of background video as it currently extends current page height
 - Implement a ticker at the bottom of the page with crypto news, prices.
 - Improve login. Use the email and not the username to login.
+- Ticker along the bottom: BTC, ETH prices. 
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

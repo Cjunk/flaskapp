@@ -66,3 +66,7 @@ sudo service postgresql start
 - Back End: More time and thought put into code design to help minimise redundant code. Makes it more efficient. Lower database calls.
 - Always Document a learnings book (Microsoft Word) from the beginning
 - SQL: Users database : Composite key from email and hashed password. To ensure unique entries.
+- Separate style sheet for each html. Even separate style sheet for particular group of elements for example Forms, buttons. To maintain consistency
+- Setup DEBUGGING before any coding. Prefer a separate DEBUG FILE
+- Include more animation for a LIVE feel to the site. The animation can just be for simple movements, slidings, popups
+
