@@ -235,11 +235,9 @@
 }
 
 #videowrapper {
-
     z-index: -5;
     text-align: center;
     display: flex;
-
     justify-content: center;
     position: relative;
 }
@@ -247,8 +245,6 @@
 #myVideo {
     position: absolute;
     right: 0;
-
     min-width: 100%;
     min-height: 100%;
-
 }
