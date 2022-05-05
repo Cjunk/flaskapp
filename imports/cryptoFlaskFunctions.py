@@ -1,19 +1,22 @@
 import os,psycopg2,hashlib
 from flask import session
-
+#   -------------------------------------------- CONSTANTS ---------------------------------------------------------------
 OFF = False
 ON = True
 MASTER_DEBUG = OFF
 
 if MASTER_DEBUG:
-    SQL_DEBUG = ON
-    API_DEBUG = ON
+    SQL_DEBUG = OFF
+    API_DEBUG = OFF
+    REGISTER_NEW_USER = ON
 else:
     SQL_DEBUG = OFF
     API_DEBUG = OFF
+    REGISTER_NEW_USER = OFF
 DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
 SECRET_KEY = os.environ.get('SECRET_KEY','pretend secret key')
-
+STARTING_CASH = 50000
+#   ----------------------------------------------------------------------------------------------------------------------
 def buycoin(coin,price,qty):
     #   TODO Update the transaction history table with the transaction
     if SQL_DEBUG:
@@ -54,8 +57,10 @@ def getuserID (username):
         cur = conn.cursor()
         postgres_insert_query = """SELECT id FROM users WHERE UPPER(nickname) Like '%s'""" %(username)
         cur.execute(postgres_insert_query)
+        id = cur.fetchone()[0]
         cur.close()
         conn.close()
+        return id
 def registernewuser(nickname,firstname,lastname,password):
     # This function adds a new user to the crypto user database
     # TODO Check if the user exists already prior to adding
@@ -64,16 +69,30 @@ def registernewuser(nickname,firstname,lastname,password):
     firstname = firstname.upper()
     lastname = lastname.upper()
     password = hashlib.sha256(str(password).encode('utf-8')).hexdigest()
+    print("REGISTERING THE NEW USER INTO THE DATABASE")
     try:
-        conn=psycopg2.connect(DATABASE_URL)
-        cur = conn.cursor()
-        postgres_insert_query = """INSERT INTO users (nickname, fname, lname, hashed_password) VALUES (%s,%s,%s,%s)"""
-        values_to_insert = [nickname,firstname,lastname,password]  
-        cur.execute(postgres_insert_query,values_to_insert)
-        conn.commit()
-        userid = getuserID(nickname,password)  
-        cur.close()
-        conn.close()  
+        if REGISTER_NEW_USER:
+            userid = 1  # Dummy user id.
+            print("registernewuser() is set to DEBUG MODE: No updates to the database for the new user")
+        else:
+            conn=psycopg2.connect(DATABASE_URL)
+            cur = conn.cursor()            
+            postgres_insert_query = """INSERT INTO users (nickname, fname, lname, hashed_password) VALUES (%s,%s,%s,%s)"""
+            values_to_insert = [nickname,firstname,lastname,password]  
+            cur.execute(postgres_insert_query,values_to_insert)
+            conn.commit()
+            userid = getuserID(nickname)  
+        # Create the portfolio for this newly registered user
+            try:
+                postgres_insert_query = """INSERT INTO portfolios (customer_owner, title, starting_cash, current_balance) VALUES (%s,%s,%s,%s)"""
+                values_to_insert = [userid,'default portfolio name',STARTING_CASH,STARTING_CASH]  
+                cur.execute(postgres_insert_query,values_to_insert)
+                conn.commit()
+            except: # Failed to insert into datbase
+                print("The new portfolio did not go in the database")
+                pass
+            cur.close()
+            conn.close()  
         return userid
     except (Exception, psycopg2.Error) as error:
         print("Failed to insert record into users table", error)
@@ -113,7 +132,7 @@ def getportfolio(userid): # Gets the porftolios summary from the database for th
     cur.close()
     conn.close() 
     return results
-def getportfolioDetail(portid,userid):
+def getportfolioDetail(portid):
     # retrieves all the detail for a single portfolio from the database
     conn=psycopg2.connect(DATABASE_URL)
     cur = conn.cursor()

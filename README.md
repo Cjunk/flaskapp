@@ -33,13 +33,14 @@ An online crypto currency portfolio tracker with live coin price data.
 
 ---
 ### Functionality
-Register user
-Starting balance
-Buy Crypto
-Display portfolio
-Sell crypto
+- Register new user
+- Login
+- Starting balance $50,000   ***No option to change***   
+- Buy Crypto
+- Display portfolio
+- Sell crypto
 
 link [Crypto Portfolio Tracker](https://pure-stream-33801.herokuapp.com/)  
-[Email]<jsharman@hotmail.com.au>
+[Email]<jsharman@hotmail.com.au>  
 Buy me a coffee <https://www.buymeacoffee.com/jerichosharman> 
 

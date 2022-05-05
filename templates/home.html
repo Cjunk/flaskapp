@@ -2,14 +2,15 @@
 <title>{% block title %} Home {% endblock %}</title>
 {% block content %}
 <link rel="stylesheet" href="static/form.css">
+
 {% if user != '' %}
 {% if session['userid'] %}
-    <div id="videowrapper">
-        <video playsinline autoplay muted loop id="myVideo">
-            <!-- https://dribbble.com/shots/16975390-NDAX-Coin-scene -->
-            <source src="static/NDAX_Dribbble_coins_2.mp4" type="video/mp4">
-        </video>
-    </div>
+<div id="videowrapper">
+    <video playsinline autoplay muted loop id="myVideo">
+        <!-- https://dribbble.com/shots/16975390-NDAX-Coin-scene -->
+        <source src="static/NDAX_Dribbble_coins_2.mp4" type="video/mp4">
+    </video>
+</div>
 <content class="pagedesign">
 
     <div class="left_hand_portfolio_panel_wrapper">
@@ -87,11 +88,22 @@
             {% endif %}
         </div>
         <h1> TRANSACTION HISTORY </h1>
+
         {% endif %}
+        <script type="text/javascript" src="static/homescript.js"></script>
         {% endif %}
+
+        {% else %}
+        <!-- <br>
+        <section id="homeAboutTextWrapper">
+            <h1>You receive a starting balance of $50,000 !
+                Free registration
+                Live crypto currency price updates
+                Buy and sell </h1>
+        </section> -->
         {% endif %}
         {% endif %}
     </div>
 </content>
-<script type="text/javascript" src="static/homescript.js"></script>
+
 {% endblock %}

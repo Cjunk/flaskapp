@@ -61,15 +61,16 @@ def sell():
 
 @app.route('/',methods=['GET', 'POST'])
 def index():
+    print("Collecting all coin prices from coinspot path = '/'  ")
     currentpricelist = getallprices()       # update from coinpot the latest prices. passed to the html
     if request.method == 'POST':    #   Path taken when registering
-        session['nick_name'] = request.form['nick_name'] 
-        session['first_name'] = request.form['fname'] 
-        session['last_name'] = request.form['lname'] 
-        session['password'] = request.form['pword']
+        print("In the POST METHOD path = '/' ")
+        registernewuser(request.form['nick_name'],request.form['fname'],request.form['lname'],request.form['pword'])
+        session['userid'] = loginuser(request.form['nick_name'],request.form['pword'])
     else:
+        print("In the GET METHOD path = '/' ")
         if session.get("userid") :
-            portfolioDetail = getportfolioDetail(session['portfolioID'],session['userid'])
+            portfolioDetail = getportfolioDetail(session['portfolioID'])
             session['portfolios'] = getportfolio(session['portfolioID']) #Add the porfolio summary to the session
             response = []
             totalcosts = []
@@ -82,14 +83,14 @@ def index():
             return render_template(homepage,portfoliodetail=portfolioDetail,response=response,totalcosts=totalcosts,currentpricelist=currentpricelist)
         else:
             return render_template(homepage,portfoliodetail="None")
-    return render_template(homepage,portfoliodetail=getportfolioDetail(1,2))
+    return render_template(homepage,portfoliodetail=getportfolioDetail(1),currentpricelist=currentpricelist)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
     if request.method == 'GET':
         return render_template("register.html")
     else:
-        return redirect(homepage)
+        return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)
