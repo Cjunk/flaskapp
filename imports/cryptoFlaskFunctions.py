@@ -1,5 +1,6 @@
-import hashlib,psycopg2,os
+import os,psycopg2,hashlib
 from flask import session
+
 OFF = False
 ON = True
 MASTER_DEBUG = OFF
