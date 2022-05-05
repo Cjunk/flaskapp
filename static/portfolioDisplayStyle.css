@@ -29,7 +29,6 @@
     grid-column-start: 2;
     background-color: #6a93cb;
     background-image: linear-gradient(315deg, #6a93cb 0%, #a4bfef 74%);
-    filter: drop-shadow(0 0 0.75rem crimson);
 }
 
 .portfolioMenu {
@@ -260,4 +259,5 @@
     justify-content: center;
     margin: 0 25%;
     border: 1px solid red;
+    border-radius: 15px;
 }

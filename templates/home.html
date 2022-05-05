@@ -31,7 +31,7 @@
             <div></div>
             <div></div>
             <div></div>
-            <button type="button" onclick="maxbuy()">max</button>
+            <button type="button" id="maxBuyBut" onclick="maxbuy()">max</button>
             <div></div>
             <div></div>
             <label for="qtyinput">Amount</label>
@@ -54,6 +54,7 @@
             <div id="displayBalanceDiv">
             <p id="currentBalancesymbol">$</p><p id="currentBalance">{{"%.2f"|format(session['portfolios'][session['showportfolio']-1][4])}}</p>
             </div>
+        <h1> Your Portfolio </h1>
         <div class="portfolioDisplayBody">
             {% if portfoliodetail %}
             <div class="portfolioDisplayWrapper">

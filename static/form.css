@@ -23,3 +23,14 @@
     height:25%;
     background:gold;
 }
+#coin,#qtyinput {
+    border-radius: 15px;
+}
+#maxBuyBut {
+    border-radius: 15px;
+    width:50%;
+    background-color: cyan;
+}
+#calculatedAmount {
+    width:50%;
+}

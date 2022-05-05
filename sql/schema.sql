@@ -1,5 +1,5 @@
 -- psql ccryptodb < schema.sql
-DROP TABLE IF EXISTS users,portfolios,portfolio_detail,transaction_history,users_authentication,transaction_types;
+DROP TABLE IF EXISTS users,portfolios,portfolio_detail,transaction_history,transaction_types;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -37,11 +37,11 @@ CREATE TABLE transaction_history (
     price FLOAT
 
 );
-CREATE TABLE users_authentication (
-    customer_ID INTEGER,
-    hashed_pw TEXT
+-- CREATE TABLE users_authentication (
+--     customer_ID INTEGER,
+--     hashed_pw TEXT
 
-);
+-- );
 
 INSERT INTO transaction_types(type_id,tran_type) VALUES(1,'BUY');
 INSERT INTO transaction_types(type_id,tran_type) VALUES(2,'SELL');
@@ -51,9 +51,3 @@ INSERT INTO users(nickname,fname,lname,hashed_password) VALUES('Sharon','Sharon'
 
 INSERT INTO portfolios(customer_owner,title,starting_cash,current_balance) VALUES(1,'savings',50000,50000);
 INSERT INTO portfolios(customer_owner,title,starting_cash,current_balance) VALUES(2,'Big Bucks',50000,50000);
-
--- INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(1,'BTC',56000,.12);
--- INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(1,'ETH',2900,.25);
--- INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(1,'XRP',.78,1000);
-
--- INSERT INTO portfolio_detail(porfolio_id,coin,cost,quantity) VALUES(2,'BTC',56000,.12);

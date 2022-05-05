@@ -2,7 +2,6 @@ from flask import Flask,render_template,request,make_response,session,redirect
 from imports.cryptoFlaskFunctions import *
 from imports.coinspot import CoinSpot
 from imports.theConstants import *
-import json
 DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
 SECRET_KEY = os.environ.get('SECRET_KEY','pretend secret key')
 app = Flask(__name__)
