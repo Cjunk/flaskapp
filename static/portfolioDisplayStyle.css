@@ -248,3 +248,16 @@
     min-width: 100%;
     min-height: 100%;
 }
+#currentBalance  {
+    font-size:36px;
+}
+#currentBalancesymbol {
+    font-size:36px;
+}
+#displayBalanceDiv {
+    color:gold;
+    display:flex;
+    justify-content: center;
+    margin: 0 25%;
+    border: 1px solid red;
+}

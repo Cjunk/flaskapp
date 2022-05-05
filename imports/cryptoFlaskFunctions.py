@@ -4,7 +4,8 @@ from flask import session
 OFF = False
 ON = True
 MASTER_DEBUG = OFF
-
+BUY = 1
+SELL = 2
 if MASTER_DEBUG:
     SQL_DEBUG = OFF
     API_DEBUG = OFF
@@ -35,6 +36,7 @@ def buycoin(coin,price,qty):
         conn.commit()        
         cur.close()
         conn.close()
+        addTransaction(coin.upper(),int(session['portfolioID']),BUY,qty,price)
 def sellrow(rowId,amount):
     #   TODO Update the transaction history table with the transaction
     if SQL_DEBUG:
@@ -50,6 +52,7 @@ def sellrow(rowId,amount):
         conn.commit()        
         cur.close()
         conn.close()
+        addTransaction(rowId,int(session['portfolioID']),SELL,amount,int(rowId))
 def getuserID (username):
     #   Used to retrieve the user id when registering a new user
         username = username.upper()
@@ -158,3 +161,32 @@ def get_portfolioID_fromuserID(userid):
     cur.close()
     conn.close()
     return results
+def addTransaction(coin,portfolio_id,transaction_type,quantity,price):
+    # function to log a transaction in the transaction table
+    if SQL_DEBUG:
+        print("THE DETAILS PASSED = ",coin,portfolio_id,transaction_type,quantity,price)
+    else:
+        print("THE DETAILS PASSED = ",coin,portfolio_id,transaction_type,quantity,price)
+        conn=psycopg2.connect(DATABASE_URL)
+        cur = conn.cursor()        
+        postgres_insert_query = """INSERT INTO transaction_history (coin, portfolio_id, tran_type, quantity, price) VALUES (%s,%s,%s,%s,%s)"""
+        values_to_insert = [portfolio_id,int(session['portfolioID']),int(transaction_type),float(quantity),float(price)]  
+        cur.execute(postgres_insert_query,values_to_insert)
+        conn.commit()        
+        cur.close()
+        conn.close()
+def getTransactionHistory():
+    conn=psycopg2.connect(DATABASE_URL)
+    cur = conn.cursor()
+    retval = 0
+    postgres_insert_query = """SELECT * FROM transaction_history WHERE portfolio_id = %s"""
+    values_to_insert = [session['portfolioID']] 
+    cur.execute(postgres_insert_query,values_to_insert)  # causing crash on HEROKU
+    rows = cur.fetchall()
+    if cur.rowcount > 0:
+        retval = rows
+    else:
+        retval = 0
+    cur.close()
+    conn.close() 
+    return retval

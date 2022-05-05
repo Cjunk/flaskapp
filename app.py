@@ -2,6 +2,7 @@ from flask import Flask,render_template,request,make_response,session,redirect
 from imports.cryptoFlaskFunctions import *
 from imports.coinspot import CoinSpot
 from imports.theConstants import *
+import json
 DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the name of the local database
 SECRET_KEY = os.environ.get('SECRET_KEY','pretend secret key')
 app = Flask(__name__)
@@ -72,6 +73,7 @@ def index():
         session['showportfolio'] = 1 # variable to decide if we are displaying a portfolio or not
     print("In the GET METHOD path = '/' ")
     if session.get("userid") :
+        transactionHistory = getTransactionHistory()
         portfolioDetail = getportfolioDetail(session['portfolioID'])
         session['portfolios'] = getportfolio(session['portfolioID']) #Add the porfolio summary to the session
         response = []
@@ -82,7 +84,7 @@ def index():
                 totalcosts.append(each[PORTFOLIO_DETAIL_PRICE] * each[PORTFOLIO_DETAIL_QTY])
             totalcosts.append(sum(totalcosts))
             response.append(sum(response))
-        return render_template(homepage,portfoliodetail=portfolioDetail,response=response,totalcosts=totalcosts,currentpricelist=currentpricelist)
+        return render_template(homepage,portfoliodetail=portfolioDetail,response=response,totalcosts=totalcosts,currentpricelist=currentpricelist,transactionHistory=transactionHistory)
     else:
         return render_template(homepage,portfoliodetail="None",currentpricelist=currentpricelist)
     #return render_template(homepage,portfoliodetail=getportfolioDetail(1),currentpricelist=currentpricelist)

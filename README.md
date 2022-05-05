@@ -44,3 +44,13 @@ link [Crypto Portfolio Tracker](https://pure-stream-33801.herokuapp.com/)
 [Email]<jsharman@hotmail.com.au>  
 Buy me a coffee <https://www.buymeacoffee.com/jerichosharman> 
 
+## TODO ##
+- Multiple portfolios
+- Confirmation to sell crypto
+- Summary and Confirmation when Buying crypto
+- Remove user option
+- Rename portfolio option
+- Move the transaction history to the far right hand side and implement scroll bars.
+- Factor in FEEs when BUYING or SELLING
+- Reduce size of background video as it currently extends current page height
+- Implement a ticker at the bottom of the page with crypto news, prices.

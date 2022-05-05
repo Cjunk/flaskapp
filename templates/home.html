@@ -50,9 +50,10 @@
         <!-- TODO -->
         <!-- Display the first portfolio: Demonstration purposes  -->
         {% if session['showportfolio'] > 0 %}
-        <a id="portfolioTextHeading">Remaining Balance
-            <p id="currentBalance">{{"%.2f"|format(session['portfolios'][session['showportfolio']-1][4])}}</p>
-        </a>
+        <a id="portfolioTextHeading">Remaining Balance</a>
+            <div id="displayBalanceDiv">
+            <p id="currentBalancesymbol">$</p><p id="currentBalance">{{"%.2f"|format(session['portfolios'][session['showportfolio']-1][4])}}</p>
+            </div>
         <div class="portfolioDisplayBody">
             {% if portfoliodetail %}
             <div class="portfolioDisplayWrapper">
@@ -88,7 +89,25 @@
             {% endif %}
         </div>
         <h1> TRANSACTION HISTORY </h1>
+        <div class="portfolioDisplayBody">
+            {% if transactionHistory %}
+            <div class="portfolioDisplayWrapper">
+                <div id="tableHeading">
+                    <a>tranid</a><a>Date</a><a>Coin</a><a>Type</a><a>Qty</a>
+                </div>
+                {% for each in transactionHistory %}
+                <div id="eachRowInPortfolio" href="#">
+                    <a>{{each[0]}}</a><a>{{each[1]}}</a><a>{{each[2]}}</a><a>{{each[3]}}</a><a>{{each[5]}}</a>
+                </div>
+                {% endfor %}
 
+            </div>
+            <div class="right-side-portfolio-panel">
+                <br>
+                <br>
+            </div>
+            {% endif %}
+        </div>
         {% endif %}
         <script type="text/javascript" src="static/homescript.js"></script>
         {% endif %}

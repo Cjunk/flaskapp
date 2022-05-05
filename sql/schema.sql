@@ -29,7 +29,7 @@ CREATE TABLE portfolio_detail(
 
 CREATE TABLE transaction_history (
     tranid SERIAL PRIMARY KEY,
-    tran_date DATE,
+    tran_date DATE default now(),
     coin TEXT,
     portfolio_id INTEGER REFERENCES portfolios(id),
     tran_type INTEGER REFERENCES transaction_types(type_id),
