@@ -1,6 +1,8 @@
 # **CRYPTO PORTFOLIO TRACKER** #
 ##### Designed, created and written by Jericho Sharman 
 
+
+
 #### link [Crypto Portfolio Tracker](https://pure-stream-33801.herokuapp.com/)  
 #### [Email]<jsharman@hotmail.com.au>  
 #### Buy me a coffee <https://www.buymeacoffee.com/jerichosharman>
@@ -85,6 +87,7 @@ allprices = cryptoApi.latestsall().json()
 - python
 
 ---
+## INSTALATION ##
 
  
 
