@@ -82,7 +82,6 @@
             <div class="right-side-portfolio-panel">
                 <br>
                 <br>
-
                 {% for each in portfoliodetail %}
                 <button class="right-side-portfolio-panel button" id="{{each[0]}}" name="{{response[loop.index-1]}}"
                     onclick="sell(this.id,this.name)">sell</button><br>
@@ -113,10 +112,9 @@
         {% endif %}
         <script type="text/javascript" src="static/homescript.js"></script>
         {% endif %}
-        {% endif %}
-    </div>
-
-    <br>
+        
+        {% else %}
+        <br>
         <section id="homeAboutTextWrapper">
             <div id="aboutbox">
             <br>
@@ -124,6 +122,10 @@
             <h1>$50,000 fake money enables you to buy crypto currency at current live prices </h1>
             </div>
         </section>
+        {% endif %}
+    </div>
+
+
 
 </content>
 {% endif %}
