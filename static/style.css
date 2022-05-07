@@ -29,10 +29,9 @@ h2 {
     background:#6cf;
  }
 #homeAboutTextWrapper {
-    background-color: #bdd4e7;
-    background-image: linear-gradient(315deg, #bdd4e7 0%, #8693ab 74%);
+
     
-    width:100%;
+    width:50%;
     top:30%;
     margin:0 auto;
 }

@@ -51,9 +51,10 @@
         <!-- Display the first portfolio: Demonstration purposes  -->
         {% if session['showportfolio'] > 0 %}
         <a id="portfolioTextHeading">Remaining Balance</a>
-            <div id="displayBalanceDiv">
-            <p id="currentBalancesymbol">$</p><p id="currentBalance">{{"%.2f"|format(session['portfolios'][session['showportfolio']-1][4])}}</p>
-            </div>
+        <div id="displayBalanceDiv">
+            <p id="currentBalancesymbol">$</p>
+            <p id="currentBalance">{{"%.2f"|format(session['portfolios'][session['showportfolio']-1][4])}}</p>
+        </div>
         <h1> Your Portfolio </h1>
         <div class="portfolioDisplayBody">
             {% if portfoliodetail %}
@@ -112,18 +113,18 @@
         {% endif %}
         <script type="text/javascript" src="static/homescript.js"></script>
         {% endif %}
-
-        {% else %}
-        <!-- <br>
-        <section id="homeAboutTextWrapper">
-            <h1>You receive a starting balance of $50,000 !
-                Free registration
-                Live crypto currency price updates
-                Buy and sell </h1>
-        </section> -->
-        {% endif %}
         {% endif %}
     </div>
-</content>
 
+    <br>
+        <section id="homeAboutTextWrapper">
+            <div id="aboutbox">
+            <br>
+            <h1>Create your own online crypto currency portfolio </h1><br>
+            <h1>$50,000 fake money enables you to buy crypto currency at current live prices </h1>
+            </div>
+        </section>
+
+</content>
+{% endif %}
 {% endblock %}
