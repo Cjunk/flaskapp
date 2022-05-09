@@ -6,6 +6,7 @@ DATABASE_URL = os.environ.get('DATABASE_URL','dbname=cryptodb') # dbname is the 
 SECRET_KEY = os.environ.get('SECRET_KEY','pretend secret key')
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
+GCP_PROJECT_ID = os.getenv('GCP_PROJECT_ID')
 #   ----------------------------------------------------------------------------------------------------------------------------------------
 # sha = hashlib.sha256()  # Do not delete this line as I feel it maybe used to 'randomize' sha256
 cryptoApi = CoinSpot("df",SECRET_KEY)   

@@ -21,7 +21,6 @@ you with historical data.
 1. Register a new account or Login  
 2. Start buying crypto currency  
 
----
 ## Use Cases ##
 
 - Mirror your real crypto holdings consolodated into the single portfolio  
@@ -31,7 +30,7 @@ you with historical data.
 ## Technical Details ##
 | Package | version | Use | comment | version |  |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| postgres | 301 | SQL | Local database | 301 | 283 |
+| postgres | 12.9 | SQL | Local database | 301 | 283 |
 | gunicorn | 301 | Heroku | heroku | 301 | 283 |
 | psycopg2 | 2.9.3 | Python | SQL conns | 301 | 283 |
 | requests | 2.27.1 | HTTP | Internet/ APIs | 301 | 283 |
@@ -57,7 +56,7 @@ heroku pg:push local_cryptodb DATABASE_URL’
 - Display portfolio
 - Display Transaction History
 ---
-## Class Coinspot
+## THE API Class 
 
 ```python
 from coinspot import CoinSpot
@@ -68,17 +67,19 @@ cryptoApi = CoinSpot("df",SECRET_KEY)
 allprices = cryptoApi.latestsall().json()
 ```
 
+No prequisites required. This is a free public access API.   
+Coinspot API documentation.
+Link (https://www.coinspot.com.au/api)
+
+---
+### INSTALLATIONS
 - Flask server
     - Server side
     - Django
-- sessions
-    - Remember user
-- API
-    - Provided by CoinSpot
   
 ---
 ## Languages used ##
-- postgresql : Heroku suppor
+- postgresql : Heroku support
 - javascript
     - Client side
 - html
@@ -103,6 +104,9 @@ allprices = cryptoApi.latestsall().json()
 - Implement a ticker at the bottom of the page with crypto news, prices.
 - Improve login. Use the email and not the username to login.
 - Ticker along the bottom: BTC, ETH prices. 
+- Change password option
+- Login page: Rearrange the input fields so more consistent
+- Use BINANCE API for crypto prices and drop COINSPOT API
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
